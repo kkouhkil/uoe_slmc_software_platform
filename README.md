@@ -2,6 +2,6 @@
 
 ![Alt text](/pics/multi_robots.png "Multi Robots")
 
-# - To launch only the model in a pre-defined gazebo world try the following:
+# - To launch only the model in a pre-defined gazebo world try:
 
     roslaunch robot_control gazebo_robot.launch
