@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Load controller configuration -->
+  <rosparam command="load" file="$(find abb_mp_myumi_description)/config/pillar_controller_config.yaml"/>
+
+  <!-- Spawn controllers -->
+  <node name="upper_body_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/" args="pillar_controller"/>
+
+</launch>
+
+

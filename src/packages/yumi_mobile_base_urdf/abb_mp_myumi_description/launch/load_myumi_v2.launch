@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="prefix"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(find abb_mp_myumi_description)/urdf/myumi_v2.xacro prefix:=$(arg prefix)"/>
+</launch>

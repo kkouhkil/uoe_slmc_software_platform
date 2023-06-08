@@ -1,0 +1,149 @@
+base_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "base_link.dae"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "base_link.stl"
+
+finger_1_base_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_1_base_link.dae"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_1_base_link.stl"
+
+finger_2_base_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_2_base_link.dae"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_2_base_link.stl"
+
+finger_1_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "0.0125 -0.0065 -0.0837"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_1_link.dae"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0125 -0.0065 -0.0837"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_1_link.stl"
+
+finger_2_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "-0.0125 0.0065 -0.0837"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_2_link.dae"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "-0.0125 0.0065 -0.0837"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "finger_2_link.stl"

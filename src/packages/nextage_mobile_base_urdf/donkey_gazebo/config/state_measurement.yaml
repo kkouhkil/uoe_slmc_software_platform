@@ -1,0 +1,13 @@
+InImuTopic: 'imu'
+InOdometryTopic: 'donkey_velocity_controller/odom'
+InGlobalTopic: 'base/localization'
+OutImuTopic: 'state_estimation/imu'
+OutOdometryTopic: 'state_estimation/odometry'
+OutGlobalTopic: 'state_estimation/localization'
+
+ImuOrientationCovariance: [0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001]
+ImuAngularVelocityCovariance: [0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01]
+ImuLinearAccelerationCovariance: [0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01]
+OdometryPoseCovariance: [0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1]
+OdometryTwistCovariance: [0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5]
+GlobalPoseCovariance: [0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5]

@@ -1,0 +1,59 @@
+base_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.2625"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.2625"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "box"
+      size: "0.146 0.146 0.525"
+    material: "dark_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.2625"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "box"
+      size: "0.146 0.146 0.525"
+
+body_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.38"
+      rpy: "0.0 0.0 0.0"
+    mass: 0.00001
+    inertia:
+      type: "per_element"
+      ixx: 0.000001
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.000001
+      iyz: 0.0
+      izz: 0.000001
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.38"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "box"
+      size: "0.163 0.163 0.76"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.38"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "box"
+      size: "0.163 0.163 0.76"

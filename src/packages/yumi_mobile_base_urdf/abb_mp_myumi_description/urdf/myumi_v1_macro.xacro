@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="abb_myumi_v1" params="prefix">
+    <!-- Includes -->
+    <xacro:include filename="$(find abb_description_utilities)/xacro/common.xacro"/>
+    <xacro:include filename="$(find abb_mp_steerable_wheel_description)/urdf/sw_v2_macro.xacro"/>
+    <xacro:include filename="$(find abb_mp_telescopic_pillar_description)/urdf/tp_v1_macro.xacro"/>
+    <xacro:include filename="$(find abb_mp_irb14000_description)/urdf/irb14000_05_50_macro.xacro"/>
+    <xacro:include filename="$(find abb_mp_smart_gripper_description)/urdf/sg_macro.xacro"/>
+    <xacro:include filename="$(find abb_mp_camera_stand_description)/urdf/cs_v1_macro.xacro"/>
+    <xacro:include filename="$(find abb_mp_camera_description)/urdf/azure_kinect_macro.xacro"/>
+
+    <!-- Properties -->
+    <xacro:load_properties package="abb_mp_myumi_description" model="myumi_v1"/>
+
+    <!-- Links -->
+	  <xacro:link_tag name="base_link"/>
+	  <xacro:link_tag name="chassis_link"/>
+	  <xacro:link_tag name="front_laser_scanner_link"/>
+	  <xacro:link_tag name="rear_laser_scanner_link"/>
+
+    <!-- Joints -->
+    <xacro:joint_tag name="chassis_joint"             parent="base_link"    child="chassis_link"/>
+    <xacro:joint_tag name="front_laser_scanner_joint" parent="chassis_link" child="front_laser_scanner_link"/>
+    <xacro:joint_tag name="rear_laser_scanner_joint"  parent="chassis_link" child="rear_laser_scanner_link"/>
+
+    <!-- Gazebo -->
+	  <xacro:gazebo_link_tag link="chassis_link"/>
+
+    <!-- ================ Subcomponents ================ -->
+
+    <!-- Steerable wheels -->
+    <xacro:abb_sw_v2 prefix="${prefix}front_left_"/>
+    <xacro:abb_sw_v2 prefix="${prefix}front_right_"/>
+    <xacro:abb_sw_v2 prefix="${prefix}rear_right_"/>
+    <xacro:abb_sw_v2 prefix="${prefix}rear_left_"/>
+    <xacro:joint_tag name="front_left_joint"  parent="chassis_link" child="front_left_base_link"/>
+    <xacro:joint_tag name="front_right_joint" parent="chassis_link" child="front_right_base_link"/>
+    <xacro:joint_tag name="rear_right_joint"  parent="chassis_link" child="rear_right_base_link"/>
+    <xacro:joint_tag name="rear_left_joint"   parent="chassis_link" child="rear_left_base_link"/>
+
+    <!-- Telescopic pillar -->
+    <xacro:abb_tp_v1 prefix="${prefix}pillar_"/>
+    <xacro:joint_tag name="chassi_pillar_joint" parent="chassis_link" child="pillar_base_link"/>
+
+    <!-- YuMi robot -->
+    <xacro:abb_irb14000_05_50 prefix="${prefix}yumi_"/>
+    <xacro:joint_tag name="pillar_yumi_joint"  parent="pillar_top_link" child="yumi_base_link"/>
+
+    <!-- SmartGrippers -->
+    <xacro:abb_sg prefix="${prefix}yumi_robl_sg_"/>
+    <xacro:abb_sg prefix="${prefix}yumi_robr_sg_"/>
+    <xacro:joint_tag name="yumi_robl_sg_joint" parent="yumi_robl_tool0" child="yumi_robl_sg_base_link"/>
+    <xacro:joint_tag name="yumi_robr_sg_joint" parent="yumi_robr_tool0" child="yumi_robr_sg_base_link"/>
+
+    <!-- Camera stand -->
+    <xacro:abb_cs_v1 prefix="${prefix}yumi_cs_"/>
+    <xacro:joint_tag name="yumi_cs_joint" parent="yumi_base_link" child="yumi_cs_base_link"/>
+
+    <!-- Camera -->
+    <xacro:ms_azure_kinect prefix="${prefix}"/>
+    <xacro:joint_tag name="cs_camera_joint" parent="yumi_cs_attachment_link" child="camera_base"/>
+  </xacro:macro>
+</robot>

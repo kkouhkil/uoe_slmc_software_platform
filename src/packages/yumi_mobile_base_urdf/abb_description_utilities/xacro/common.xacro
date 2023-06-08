@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- ============================================== Include Macros =============================================== -->
+
+  <xacro:include filename="$(find abb_description_utilities)/xacro/joints.xacro"/>
+  <xacro:include filename="$(find abb_description_utilities)/xacro/links.xacro"/>
+  <xacro:include filename="$(find abb_description_utilities)/xacro/geometries.xacro"/>
+  <xacro:include filename="$(find abb_description_utilities)/xacro/inertia.xacro"/>
+  <xacro:include filename="$(find abb_description_utilities)/xacro/transmissions.xacro"/>
+  <xacro:include filename="$(find abb_description_utilities)/xacro/gazebo.xacro"/>
+
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Load and create properties (based on YAML files for the specified package and model) -->
+  <xacro:macro name="load_properties" params="package model">
+    <!-- Package and model -->
+    <xacro:property scope="parent" name="package" value="${package}"/>
+    <xacro:property scope="parent" name="model" value="${model}"/>
+
+    <!-- YAML files -->
+    <xacro:property name="joints_file"        value="$(find ${package})/properties/${model}/joints.yaml"/>
+    <xacro:property name="links_file"         value="$(find ${package})/properties/${model}/links.yaml"/>
+    <xacro:property name="transmissions_file" value="$(find ${package})/properties/${model}/transmissions.yaml"/>
+    <xacro:property name="gazebo_file"        value="$(find ${package})/properties/${model}/gazebo.yaml"/>
+
+    <!-- Properties -->
+    <xacro:property scope="parent" name="joint_properties"        value="${load_yaml(joints_file)}"/>
+    <xacro:property scope="parent" name="link_properties"         value="${load_yaml(links_file)}"/>
+    <xacro:property scope="parent" name="transmission_properties" value="${load_yaml(transmissions_file)}"/>
+    <xacro:property scope="parent" name="gazebo_properties"       value="${load_yaml(gazebo_file)}"/>
+  </xacro:macro>
+
+  <!-- Extract and create a 'data' property (empty if the specified key is not found among the properties) -->
+  <xacro:macro name="extract_data" params="key properties">
+    <xacro:property scope="parent" name="data" value=""/>
+
+    <xacro:if value="${key in properties}">
+      <xacro:property scope="parent" name="data" value="${properties[key]}"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <!-- ============================================== Support Macros =============================================== -->
+
+  <!-- Creates an 'origin' tag -->
+  <xacro:macro name="origin_tag" params="data offset_xyz='0.0 0.0 0.0' offset_rpy='0.0 0.0 0.0'">
+    <!-- Offset values -->
+    <xacro:property name="offset_x"     value="${float(offset_xyz.split()[0])}"/>
+    <xacro:property name="offset_y"     value="${float(offset_xyz.split()[1])}"/>
+    <xacro:property name="offset_z"     value="${float(offset_xyz.split()[2])}"/>
+    <xacro:property name="offset_roll"  value="${radians(float(offset_rpy.split()[0]))}"/>
+    <xacro:property name="offset_pitch" value="${radians(float(offset_rpy.split()[1]))}"/>
+    <xacro:property name="offset_yaw"   value="${radians(float(offset_rpy.split()[2]))}"/>
+
+    <!-- Default values -->
+    <xacro:property name="x"     value="0.0"/>
+    <xacro:property name="y"     value="0.0"/>
+    <xacro:property name="z"     value="0.0"/>
+    <xacro:property name="roll"  value="0.0"/>
+    <xacro:property name="pitch" value="0.0"/>
+    <xacro:property name="yaw"   value="0.0"/>
+
+    <!-- XYZ data -->
+    <xacro:if value="${'xyz' in data}">
+      <xacro:property name="x" value="${float(data['xyz'].split()[0])}"/>
+      <xacro:property name="y" value="${float(data['xyz'].split()[1])}"/>
+      <xacro:property name="z" value="${float(data['xyz'].split()[2])}"/>
+    </xacro:if>
+
+    <!-- RPY data -->
+    <xacro:if value="${'rpy' in data}">
+      <xacro:property name="roll"  value="${radians(float(data['rpy'].split()[0]))}"/>
+      <xacro:property name="pitch" value="${radians(float(data['rpy'].split()[1]))}"/>
+      <xacro:property name="yaw"   value="${radians(float(data['rpy'].split()[2]))}"/>
+    </xacro:if>
+
+    <!-- Origin -->
+    <origin xyz="${x+offset_x} ${y+offset_y} ${z+offset_z}"
+            rpy="${roll+offset_roll} ${pitch+offset_pitch} ${yaw+offset_yaw}"/>
+  </xacro:macro>
+
+  <!-- Creates a 'material' tag -->
+  <xacro:macro name="material_tag" params="material">
+    <xacro:if value="${material == 'white'}">
+      <material name="${material}"><color rgba="1 1 1 1"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'light_grey'}">
+      <material name="${material}"><color rgba="0.6 0.6 0.6 1.0"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'grey'}">
+      <material name="${material}"><color rgba="0.5 0.5 0.5 1.0"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'dark_grey'}">
+      <material name="${material}"><color rgba="0.3 0.3 0.3 1.0"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'black'}">
+      <material name="${material}"><color rgba="0 0 0 1"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'red'}">
+      <material name="${material}"><color rgba="1 0 0 1"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'green'}">
+      <material name="${material}"><color rgba="0 1 0 1"/></material>
+    </xacro:if>
+
+    <xacro:if value="${material == 'blue'}">
+      <material name="${material}"><color rgba="0 0 1 1"/></material>
+    </xacro:if>
+  </xacro:macro>
+</robot>

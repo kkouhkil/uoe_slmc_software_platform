@@ -1,0 +1,10 @@
+steering_link:
+  material: "Gazebo/White"
+
+drive_wheel_link:
+  material: "Gazebo/Grey"
+  mu1: 1.0
+  mu2: 1.0
+  kp: 10000000.0
+  kd: 1.0
+  fdir1: "1.0 0.0 0.0"

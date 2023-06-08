@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="abb_myumi_v2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Arguments -->
+  <xacro:arg name="prefix" default=""/>
+
+  <!-- Includes -->
+  <xacro:include filename="$(find abb_mp_myumi_description)/urdf/myumi_v2_macro.xacro"/>
+
+  <!-- Instantiations -->
+  <xacro:abb_myumi_v2 prefix="$(arg prefix)"/>
+
+
+  <!-- Gazebo plugin for ROS Control -->
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        <legacyModeNS>true</legacyModeNS>
+      </plugin>
+
+      <plugin name='p3d_base_controller' filename='libgazebo_ros_p3d.so'>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+        <bodyName>base_link</bodyName>
+        <topicName>odom</topicName>
+        <gaussianNoise>0.001</gaussianNoise>
+        <frameName>world</frameName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+
+    </gazebo>
+
+
+</robot>

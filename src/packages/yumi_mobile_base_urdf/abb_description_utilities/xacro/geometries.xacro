@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Creates a 'geometry' tag -->
+  <xacro:macro name="geometry_tag" params="package=^ model=^ data mesh_type=''">
+    <geometry>
+      <!-- Box -->
+      <xacro:if value="${data['type'] == 'box'}">
+        <box size="${data['size']}"/>
+      </xacro:if>
+
+      <!-- Cylinder -->
+      <xacro:if value="${data['type'] == 'cylinder'}">
+        <cylinder length="${data['length']}" radius="${data['radius']}"/>
+      </xacro:if>
+
+      <!-- Sphere -->
+      <xacro:if value="${data['type'] == 'sphere'}">
+        <sphere radius="${data['radius']}"/>
+      </xacro:if>
+
+      <!-- Mesh (visual or collision) -->
+      <xacro:if value="${data['type'] == 'mesh'}">
+        <mesh filename="package://${package}/meshes/${model}/${mesh_type}/${data['filename']}"/>
+      </xacro:if>
+    </geometry>
+  </xacro:macro>
+</robot>

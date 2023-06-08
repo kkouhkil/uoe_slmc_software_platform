@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<robot name="tool_changer" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="hexe_cylinder_inertia_def" params="r h mass">
+        <inertia ixx="${mass*(3*r*r+h*h)/12}" ixy="0" ixz="0" iyy="${mass*(3*r*r+h*h)/12}" iyz="0" izz="${mass*r*r/2}"/>
+    </xacro:macro>
+
+    <xacro:macro name="hexe_sphere_inertia_def" params="radius mass">
+        <inertia ixx="${2/5*mass*radius*radius}" ixy="0" ixz="0" iyy="${2/5*mass*radius*radius}" iyz="0" izz="${2/5*mass*radius*radius}"/>
+    </xacro:macro>
+
+    <!-- Define the tool changer -->
+    <xacro:macro name="tool_changer" params="prefix parent *origin">
+
+        <link name="${prefix}changer_link_base">
+            <visual>
+              <origin xyz="0.002 0 0.011" rpy="0 0 ${radians(-90)}"/>
+                <geometry>
+                  <mesh filename="package://nextage_extensions/urdf/meshes/tool_changer.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="LightGrey">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0.0195" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.039" radius="0.03505"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.200" />
+                <origin xyz="0 0 0.0195" rpy="0 0 0"/>
+                <xacro:hexe_cylinder_inertia_def r="0.03505" h="0.039" mass="0.200"/>
+            </inertial>
+        </link>
+
+        <link name="${prefix}changer_link">
+            <inertial>
+                <mass value="0.0001" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <xacro:hexe_sphere_inertia_def radius="0.0001" mass="0.0001"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}changer_robot_side_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}changer_link_base"/>
+            <xacro:insert_block name="origin"/>
+            <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <joint name="${prefix}changer_tool_side_joint" type="fixed">
+            <parent link="${prefix}changer_link_base"/>
+            <child link="${prefix}changer_link"/>
+            <origin xyz="0 0 0.039" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>
+

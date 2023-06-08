@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Creates a 'transmission' tag (based on properties loaded from an YAML file) -->
+  <xacro:macro name="transmission_tag" params="prefix=^ transmission_properties=^ name joint">
+    <xacro:extract_data key="${name}" properties="${transmission_properties}"/>
+
+    <transmission name="${prefix}${name}">
+      <type>${data['type']}</type>
+      <joint name="${prefix}${joint}">
+        <hardwareInterface>${data['hardware_interface']}</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}${joint}_motor">
+        <mechanicalReduction>${data['mechanical_reduction']}</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+</robot>

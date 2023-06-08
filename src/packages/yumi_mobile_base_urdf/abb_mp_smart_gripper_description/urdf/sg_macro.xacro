@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="abb_sg" params="prefix">
+    <!-- Includes -->
+    <xacro:include filename="$(find abb_description_utilities)/xacro/common.xacro"/>
+
+    <!-- Properties -->
+    <xacro:load_properties package="abb_mp_smart_gripper_description" model="sg"/>
+
+    <!-- Links -->
+	  <xacro:link_tag name="base_link"/>
+	  <xacro:link_tag name="servo_frame_link"/>
+	  <xacro:link_tag name="fingers_frame_link"/>
+	  <xacro:link_tag name="vacuum_1_frame_link"/>
+	  <xacro:link_tag name="vacuum_2_frame_link"/>
+	  <xacro:link_tag name="camera_frame_link"/>
+	  <xacro:link_tag name="finger_1_base_link"/>
+	  <xacro:link_tag name="finger_2_base_link"/>
+	  <xacro:link_tag name="finger_1_link"/>
+	  <xacro:link_tag name="finger_2_link"/>
+
+    <!-- Joints -->
+    <xacro:joint_tag name="servo_frame_joint"    parent="base_link" child="servo_frame_link"/>
+    <xacro:joint_tag name="fingers_frame_joint"  parent="base_link" child="fingers_frame_link"/>
+    <xacro:joint_tag name="vacuum_1_frame_joint" parent="base_link" child="vacuum_1_frame_link"/>
+    <xacro:joint_tag name="vacuum_2_frame_joint" parent="base_link" child="vacuum_2_frame_link"/>
+    <xacro:joint_tag name="camera_frame_joint"   parent="base_link" child="camera_frame_link"/>
+    <xacro:joint_tag name="finger_1_base_joint"  parent="base_link" child="finger_1_base_link"/>
+    <xacro:joint_tag name="finger_2_base_joint"  parent="base_link" child="finger_2_base_link"/>
+    <xacro:joint_tag name="finger_1_joint"       parent="finger_1_base_link" child="finger_1_link"/>
+    <xacro:joint_tag name="finger_2_joint"       parent="finger_2_base_link" child="finger_2_link"/>
+
+    <!-- Gazebo -->
+    <xacro:gazebo_link_tag link="base_link"/>
+    <xacro:gazebo_link_tag link="finger_1_base_link"/>
+    <xacro:gazebo_link_tag link="finger_2_base_link"/>
+    <xacro:gazebo_link_tag link="finger_1_link"/>
+    <xacro:gazebo_link_tag link="finger_2_link"/>
+  </xacro:macro>
+</robot>

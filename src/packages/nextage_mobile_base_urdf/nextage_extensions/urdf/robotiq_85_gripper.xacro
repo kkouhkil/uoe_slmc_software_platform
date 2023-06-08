@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<robot name="robotiq_85_gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="contact_parameters" params="name">
+        <gazebo reference="${name}">
+            <dampingFactor>0.001</dampingFactor>
+            <mu1 value="1.0" />
+            <mu2 value="1.0" />
+            <kp  value="1e5" />
+            <kd  value="1e2" />
+            <maxVel  value="1.0" />
+            <minDepth  value="0.0" />
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="robotiq_box_inertia_def" params="x y z mass">
+        <inertia iyy="${mass*(z*z+x*x)/12.0}" ixx="${mass*(y*y+z*z)/12.0}" izz="${mass*(x*x+y*y)/12.0}" ixy="0.0" iyz="0.0" ixz="0.0"/>
+    </xacro:macro>
+    <xacro:macro name="robotiq_cylinder_inertia_def" params="r h mass">
+        <inertia ixx="${mass*(3*r*r+h*h)/12}" ixy="0" ixz="0" iyy="${mass*(3*r*r+h*h)/12}" iyz="0" izz="${mass*r*r/2}"/>
+    </xacro:macro>
+
+    <xacro:macro name="robotiq_85_gripper_transmission" params="prefix">
+
+        <transmission name="${prefix}gripper_finger1_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_finger1_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_finger1_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}gripper_finger2_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_finger2_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_finger2_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}gripper_finger2_inner_knuckle_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_finger2_inner_knuckle_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_finger2_inner_knuckle_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}gripper_finger1_inner_knuckle_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_finger1_inner_knuckle_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_finger1_inner_knuckle_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}gripper_finger1_finger_tip_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_finger1_finger_tip_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_finger1_finger_tip_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}gripper_finger2_finger_tip_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_finger2_finger_tip_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_finger2_finger_tip_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}gripper_open_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}gripper_open_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}gripper_open_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+    </xacro:macro>
+
+    <xacro:macro name="robotiq_85_gripper" params="prefix parent *origin">
+
+        <joint name="${prefix}gripper_base_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}gripper_base_link"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+
+        <link name="${prefix}gripper_base_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_base_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 1.57 0" xyz="0.03 0 0"/>
+                <geometry>
+                    <cylinder length="0.06" radius="0.04"/>
+                </geometry>
+            </collision>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.075 0 0"/>
+                <geometry>
+                    <box size="0.03 0.08 0.025"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.636951" />
+                <origin xyz="0.03 0 0" rpy="0 1.57 0"/>
+                <xacro:robotiq_cylinder_inertia_def r="0.04" h="0.06" mass="0.827563"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_base_link"/>
+
+        <joint name="${prefix}gripper_finger1_joint" type="revolute">
+            <parent link="${prefix}gripper_base_link"/>
+            <child link="${prefix}gripper_finger1_knuckle_link"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="${pi} 0.0 0.0" xyz="0.05490451627 0.03060114443 0.0"/>
+            <limit lower="0.0" upper="0.804" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger1_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <joint name="${prefix}gripper_finger2_joint" type="revolute">
+            <parent link="${prefix}gripper_base_link"/>
+            <child link="${prefix}gripper_finger2_knuckle_link"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.05490451627 -0.03060114443 0.0"/>
+            <limit lower="-3.14" upper="3.14" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger2_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}gripper_finger1_knuckle_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.001" />
+                <origin xyz="0.0 0.0 0.0" />
+                <xacro:robotiq_box_inertia_def x="0.01" y="0.01" z="0.01" mass="0.001"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger1_knuckle_link"/>
+
+        <link name="${prefix}gripper_finger2_knuckle_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.001" />
+                <origin xyz="0.0 0.0 0.0" />
+                <xacro:robotiq_box_inertia_def x="0.01" y="0.01" z="0.01" mass="0.001"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger2_knuckle_link"/>
+
+        <joint name="${prefix}gripper_finger1_finger_joint" type="fixed">
+            <parent link="${prefix}gripper_finger1_knuckle_link"/>
+            <child link="${prefix}gripper_finger1_finger_link"/>
+            <origin xyz="-0.00408552455 -0.03148604435 0.0" rpy="0 0 0" />
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger1_finger_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <joint name="${prefix}gripper_finger2_finger_joint" type="fixed">
+            <parent link="${prefix}gripper_finger2_knuckle_link"/>
+            <child link="${prefix}gripper_finger2_finger_link"/>
+            <origin xyz="-0.00408552455 -0.03148604435 0.0" rpy="0 0 0" />
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger2_finger_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}gripper_finger1_finger_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 -0.15" xyz="0.025 0.004 0"/>
+                <geometry>
+                    <box size="0.06 0.03 0.028"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.0005" />
+                <origin rpy="0 0 -0.15" xyz="0.025 0.004 0"/>
+                <xacro:robotiq_box_inertia_def x="0.01" y="0.01" z="0.01" mass="0.0005"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger1_finger_link"/>
+
+        <link name="${prefix}gripper_finger2_finger_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 -0.15" xyz="0.025 0.004 0"/>
+                <geometry>
+                    <box size="0.06 0.03 0.028"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.0005" />
+                <origin rpy="0 0 -0.15" xyz="0.025 0.004 0"/>
+                <xacro:robotiq_box_inertia_def x="0.01" y="0.01" z="0.01" mass="0.0005"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger2_finger_link"/>
+
+        <joint name="${prefix}gripper_finger1_inner_knuckle_joint" type="revolute">
+            <parent link="${prefix}gripper_base_link"/>
+            <child link="${prefix}gripper_finger1_inner_knuckle_link"/>
+            <axis xyz="0 0 1"/>
+            <origin xyz="0.06142 0.0127 0" rpy="${pi} 0.0 0.0" />
+            <limit lower="-3.14" upper="3.14" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger1_inner_knuckle_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <joint name="${prefix}gripper_finger2_inner_knuckle_joint" type="revolute">
+            <parent link="${prefix}gripper_base_link"/>
+            <child link="${prefix}gripper_finger2_inner_knuckle_link"/>
+            <axis xyz="0 0 1"/>
+            <origin xyz="0.06142 -0.0127 0" rpy="0 0 0"/>
+            <limit lower="-3.14" upper="3.14" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger2_inner_knuckle_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}gripper_finger1_inner_knuckle_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 -0.707" xyz="0.02 -0.018 0"/>
+                <geometry>
+                    <box size="0.07 0.015 0.038"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.001" />
+                <origin rpy="0 0 -0.707" xyz="0.02 -0.018 0"/>
+                <xacro:robotiq_box_inertia_def x="0.07" y="0.015" z="0.038" mass="0.001"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger1_inner_knuckle_link"/>
+
+        <link name="${prefix}gripper_finger2_inner_knuckle_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 -0.707" xyz="0.02 -0.018 0"/>
+                <geometry>
+                    <box size="0.07 0.015 0.038"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.001" />
+                <origin rpy="0 0 -0.707" xyz="0.02 -0.018 0"/>
+                <xacro:robotiq_box_inertia_def x="0.07" y="0.015" z="0.038" mass="0.001"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger2_inner_knuckle_link"/>
+
+        <joint name="${prefix}gripper_finger1_finger_tip_joint" type="revolute">
+            <parent link="${prefix}gripper_finger1_inner_knuckle_link"/>
+            <child link="${prefix}gripper_finger1_finger_tip_link"/>
+            <axis xyz="0 0 1"/>
+            <origin xyz="0.04303959807 -0.03759940821 0.0" rpy="0.0 0.0 0.0"/>
+            <limit lower="-3.14" upper="3.14" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger1_finger_tip_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <joint name="${prefix}gripper_finger2_finger_tip_joint" type="revolute">
+            <parent link="${prefix}gripper_finger2_inner_knuckle_link"/>
+            <child link="${prefix}gripper_finger2_finger_tip_link"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.04303959807 -0.03759940821  0.0"/>
+            <limit lower="-3.14" upper="3.14" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_finger2_finger_tip_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+
+        <link name="${prefix}gripper_finger1_finger_tip_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.02 0.0005 0"/>
+                <geometry>
+                    <box size="0.05 0.015 0.024"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.0001" />
+                <origin rpy="0 0 0" xyz="0.02 0.0005 0" />
+                <xacro:robotiq_box_inertia_def x="0.05" y="0.015" z="0.024" mass="0.0001"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger1_finger_tip_link"/>
+
+        <link name="${prefix}gripper_finger2_finger_tip_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.02 0.0005 0"/>
+                <geometry>
+                    <box size="0.05 0.015 0.024"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.0001" />
+                <origin rpy="0 0 0" xyz="0.02 0.0005 0" />
+                <xacro:robotiq_box_inertia_def x="0.05" y="0.015" z="0.024" mass="0.0001"/>
+            </inertial>
+        </link>
+        <xacro:contact_parameters name="${prefix}gripper_finger2_finger_tip_link"/>
+
+        <joint name="${prefix}gripper_open_joint" type="revolute">
+            <parent link="${prefix}gripper_base_link"/>
+            <child link="${prefix}gripper_dummy_link"/>
+            <axis xyz="1 0 0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0 0 0"/>
+            <limit lower="0" upper="0.085" velocity="1.0" effort="100"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <gazebo reference="${prefix}gripper_open_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}gripper_dummy_link">
+            <inertial>
+                <mass value="0.0001" />
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <xacro:robotiq_box_inertia_def x="0.05" y="0.015" z="0.024" mass="0.0001"/>
+            </inertial>
+        </link>
+
+        <xacro:robotiq_85_gripper_transmission prefix="${prefix}" />
+
+    </xacro:macro>
+
+</robot>

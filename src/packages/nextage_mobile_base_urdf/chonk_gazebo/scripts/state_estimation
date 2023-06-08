@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+
+# Copyright (c) 2021, University of Edinburgh
+# All rights reserved. 
+
+# Redistribution and use in source and binary forms, with or without 
+# modification, are permitted provided that the following conditions are met: 
+
+#  * Redistributions of source code must retain the above copyright notice, 
+#    this list of conditions and the following disclaimer. 
+#  * Redistributions in binary form must reproduce the above copyright 
+#    notice, this list of conditions and the following disclaimer in the 
+#    documentation and/or other materials provided with the distribution. 
+#  * Neither the name of  nor the names of its contributors may be used to 
+#    endorse or promote products derived from this software without specific 
+#    prior written permission. 
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+# POSSIBILITY OF SUCH DAMAGE.
+
+from __future__ import print_function, division
+
+import rospy
+from sensor_msgs.msg import Imu
+from nav_msgs.msg import Odometry
+from geometry_msgs.msg import TransformStamped
+from time import sleep
+
+class StateMeasurementCorrection:
+    def __init__(self):
+        self.in_imu_topic = rospy.get_param('~InImuTopic', 'imu/data')
+        self.in_odometry_topic = rospy.get_param('~InOdometryTopic', 'donkey_velocity_controller/odom')
+        self.in_global_topic = rospy.get_param('~InGlobalTopic', 'global_transform')
+        self.out_imu_topic = rospy.get_param('~OutImuTopic', 'state_estimation/imu')
+        self.out_odometry_topic = rospy.get_param('~OutOdometryTopic', 'state_estimation/odometry')
+        self.out_global_topic = rospy.get_param('~OutGlobalTopic', 'state_estimation/global')
+
+        self.imu_orientation_cov = rospy.get_param('~ImuOrientationCovariance', [0, 0, 0, 0, 0, 0, 0, 0, 0])
+        self.imu_angular_velocity_cov = rospy.get_param('~ImuAngularVelocityCovariance', [0, 0, 0, 0, 0, 0, 0, 0, 0])
+        self.imu_linear_acceleration_cov = rospy.get_param('~ImuLinearAccelerationCovariance', [0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+        self.odom_pose_cov = rospy.get_param('~OdometryPoseCovariance', [0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03])
+        self.odom_twist_cov = rospy.get_param('~OdometryTwistCovariance', [0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03])
+
+        self.global_pose_cov = rospy.get_param('~GlobalPoseCovariance', [0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03])
+        self.global_link = 'base_link'
+
+        self.pubImu = rospy.Publisher(self.out_imu_topic, Imu, queue_size=100, tcp_nodelay=True)
+        self.pubOdom = rospy.Publisher(self.out_odometry_topic, Odometry, queue_size=100, tcp_nodelay=True)
+        self.pubGlobal = rospy.Publisher(self.out_global_topic, Odometry, queue_size=100, tcp_nodelay=True)
+
+        rospy.Subscriber(self.in_odometry_topic, Odometry, self.callbackOdometry)
+        rospy.Subscriber(self.in_imu_topic, Imu, self.callbackImu)
+        rospy.Subscriber(self.in_global_topic, TransformStamped, self.callbackGlobal)
+
+    def callbackImu(self, data):
+        msg = data
+        msg.orientation_covariance = self.imu_orientation_cov
+        msg.angular_velocity_covariance = self.imu_angular_velocity_cov
+        msg.linear_acceleration_covariance = self.imu_linear_acceleration_cov
+        self.pubImu.publish(msg)
+
+    def callbackOdometry(self, data):
+        msg = data
+        self.global_link = data.child_frame_id
+        msg.pose.covariance = self.odom_pose_cov
+        msg.twist.covariance = self.odom_twist_cov
+        self.pubOdom.publish(msg)
+
+    def callbackGlobal(self, data):
+        msg = Odometry()
+        msg.header = data.header
+        if (msg.header.stamp - rospy.Time()).to_sec() == 0:
+            msg.header.stamp = rospy.Time.now()
+        msg.child_frame_id = self.global_link
+        msg.pose.pose.position.x = data.transform.translation.x
+        msg.pose.pose.position.y = data.transform.translation.y
+        msg.pose.pose.position.z = data.transform.translation.z
+        msg.pose.pose.orientation = data.transform.rotation
+        msg.pose.covariance = self.global_pose_cov
+        self.pubGlobal.publish(msg)
+
+if __name__ == '__main__':
+    rospy.init_node('StateEstimationRepublisher')
+    print('Starting state measurement republisher')
+    measurement_correction = StateMeasurementCorrection()
+    rospy.spin()

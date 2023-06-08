@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- ============================================================================================================= -->
+  <!-- Based on: https://github.com/microsoft/Azure_Kinect_ROS_Driver/blob/melodic/urdf/azure_kinect.urdf.xacro      -->
+  <!-- ============================================================================================================= -->
+  <xacro:macro name="ms_azure_kinect" params="prefix">
+    <link name="${prefix}camera_body">
+      <visual>
+        <origin xyz="0. 0. 0." />
+        <geometry>
+          <box size="0.0994 0.0996 0.023" />
+        </geometry>
+        <material name="white">
+          <color rgba="0.9 0.9 0.9 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0. 0. 0." />
+        <geometry>
+          <box size="0.0994 0.0996 0.023" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}camera_base">
+      <visual>
+        <origin xyz="-0.013 0. 0." />
+        <geometry>
+          <box size="0.026 0.103 0.039" />
+        </geometry>
+        <material name="grey">
+          <color rgba="0.6 0.6 0.6 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="-0.013 0. 0." />
+        <geometry>
+          <box size="0.026 0.103 0.039" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}camera_visor">
+      <visual>
+        <origin xyz="-0.0128 0. 0." />
+        <geometry>
+          <box size="0.026 0.101 0.037" />
+        </geometry>
+        <material name="black">
+          <color rgba="0. 0. 0. 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="-0.0128 0. 0." />
+        <geometry>
+          <box size="0.026 0.101 0.037" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}camera_base_to_body" type="fixed">
+      <parent link="${prefix}camera_base" />
+      <child link="${prefix}camera_body" />
+      <origin xyz="-0.0757 0. 0.008" rpy="0. 0. 0." />
+    </joint>
+
+    <joint name="${prefix}camera_base_to_visor" type="fixed">
+      <parent link="${prefix}camera_base" />
+      <child link="${prefix}camera_visor" />
+      <origin xyz="0. 0. 0." rpy="0. 0. 0." />
+    </joint>
+
+    <gazebo reference="${prefix}camera_visor">
+      <material>Gazebo/Black</material>
+    </gazebo>
+  </xacro:macro>
+</robot>

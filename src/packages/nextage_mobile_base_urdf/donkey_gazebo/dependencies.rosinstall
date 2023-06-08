@@ -1,0 +1,3 @@
+- git: {local-name: ridgeback_simulator, uri: 'git@github.com:VladimirIvan/ridgeback_simulator.git', version: melodic-devel}
+- git: {local-name: ridgeback, uri: 'git@github.com:VladimirIvan/ridgeback.git', version: melodic-devel}
+- git: {local-name: donkey_description, uri: 'git@github.com:ipab-slmc/donkey_description.git'}

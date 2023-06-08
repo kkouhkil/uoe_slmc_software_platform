@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>abb_description_utilities</name>
+  <version>0.5.0</version>
+  <description>
+    Utility macros for easing the creation of xacro based URDFs.
+  </description>
+  <maintainer email="jon.tjerngren@se.abb.com">Jon Tjerngren</maintainer>
+  <license>Proprietary</license>
+  <author>Jon Tjerngren</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>xacro</exec_depend>
+</package>

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="prefix"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(find abb_mp_steerable_wheel_description)/urdf/sw_v1.xacro prefix:=$(arg prefix)"/>
+</launch>

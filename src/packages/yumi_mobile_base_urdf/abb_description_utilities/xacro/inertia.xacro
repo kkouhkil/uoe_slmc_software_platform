@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Creates an 'inertia' tag -->
+  <xacro:macro name="inertia_tag" params="data mass">
+    <xacro:if value="${data['type'] == 'per_element'}">
+      <xacro:per_element_inertia_tag/>
+    </xacro:if>
+
+    <xacro:if value="${data['type'] == 'solid_cuboid'}">
+      <xacro:solid_cuboid_inertia_tag width="${data['width']}" length="${data['length']}" height="${data['height']}"/>
+    </xacro:if>
+
+    <xacro:if value="${data['type'] == 'solid_cylinder'}">
+      <xacro:solid_cylinder_inertia_tag length="${data['length']}" radius="${data['radius']}"/>
+    </xacro:if>
+
+    <xacro:if value="${data['type'] == 'solid_sphere'}">
+      <xacro:solid_sphere_inertia_tag radius="${data['radius']}"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <!-- ============================================== Support Macros =============================================== -->
+
+  <!-- Creates an 'inertia' tag (per each element) -->
+  <xacro:macro name="per_element_inertia_tag" params="data=^">
+    <inertia ixx="${data['ixx']}" ixy="${data['ixy']}" ixz="${data['ixz']}"
+                                  iyy="${data['iyy']}" iyz="${data['iyz']}"
+                                                       izz="${data['izz']}"/>
+  </xacro:macro>
+
+  <!-- Creates an 'inertia' tag (for a solid cuboid) -->
+  <xacro:macro name="solid_cuboid_inertia_tag" params="mass=^ width length height">
+    <xacro:property name="ww" value="${width*width}"/>
+    <xacro:property name="ll" value="${length*length}"/>
+    <xacro:property name="hh" value="${height*height}"/>
+
+    <inertia ixx="${mass*(ww+hh)/12.0}" ixy="0.0"                  ixz="0.0"
+                                        iyy="${mass*(ll+hh)/12.0}" iyz="0.0"
+                                                                   izz="${mass*(ww+ll)/12.0}"/>
+  </xacro:macro>
+
+  <!-- Creates an 'inertia' tag (for a solid cylinder) -->
+  <xacro:macro name="solid_cylinder_inertia_tag" params="mass=^ length radius">
+    <xacro:property name="ll" value="${length*length}"/>
+    <xacro:property name="rr" value="${radius*radius}"/>
+
+    <inertia ixx="${mass*(3.0*rr+ll)/12.0}" ixy="0.0"                      ixz="0.0"
+                                            iyy="${mass*(3.0*rr+ll)/12.0}" iyz="0.0"
+                                                                           izz="${mass*rr/2.0}"/>
+  </xacro:macro>
+
+  <!-- Creates an 'inertia' tag (for a solid sphere) -->
+  <xacro:macro name="solid_sphere_inertia_tag" params="mass=^ radius">
+    <xacro:property name="rr" value="${radius*radius}"/>
+
+    <inertia ixx="${2.0*mass*rr/5.0}" ixy="0.0"                ixz="0.0"
+                                      iyy="${2.0*mass*rr/5.0}" iyz="0.0"
+                                                               izz="${2.0*mass*rr/5.0}"/>
+  </xacro:macro>
+</robot>

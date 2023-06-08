@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!--
+    Launch node for subscribing Odometry messages and publishing them as tf messages
+  -->
+  <arg name="odo_topic"         default="/odom" />
+  <arg name="time_now"          default="true"/>
+
+  <node pkg="tf_server" type="odo_to_tf_node" name="odo_to_tf" output="screen">
+    <param name="odo_topic"     value="$(arg odo_topic)"/>
+    <param name="time_now"      value="$(arg time_now)"/>
+  </node>
+
+</launch>

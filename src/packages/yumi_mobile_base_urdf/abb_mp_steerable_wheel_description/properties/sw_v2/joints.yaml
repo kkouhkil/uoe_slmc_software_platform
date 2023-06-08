@@ -1,0 +1,23 @@
+steering_joint:
+  type: "revolute"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0.0 0.0 1.0"
+  limits:
+    lower: -3600.0
+    upper: 3600.0
+    velocity: 3600.0
+    effort: 1000.0
+  dynamics:
+    damping: 0.7
+    friction: 0.0
+
+drive_wheel_joint:
+  type: "continuous"
+  origin:
+    xyz: "0.0 0.0 -0.1769"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0.0 1.0 0.0"

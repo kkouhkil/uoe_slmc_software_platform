@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<robot name="chonk" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find donkey_description)/urdf/donkey.xacro" />
+    <xacro:include filename="$(find nextagea_description)/urdf/robot/nextagea_robot.xacro" />
+    <xacro:include filename="$(find nextage_extensions)/urdf/ati.xacro" />
+    <xacro:include filename="$(find nextage_extensions)/urdf/tool_changer.xacro" />
+    <xacro:include filename="$(find nextage_extensions)/urdf/robotiq_140_gripper.xacro" />
+    <xacro:include filename="$(find nextage_extensions)/urdf/intel_realsense.xacro" />
+
+    <!-- Robot -->
+    <xacro:nextagea_robot nextagea_gazebo_ros_control="false"/>
+
+    <!-- Base -->
+    <xacro:donkey_base prefix="chonk" donkey_gazebo_ros_control="false">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:donkey_base>
+
+    <xacro:meccanum_base_mount prefix="chonk" child="WAIST">
+        <origin xyz="0.422 0.0 0.855" rpy="0 0 0"/>
+    </xacro:meccanum_base_mount>
+
+    <!-- F/T sensors -->
+    <xacro:ati_ft_sensor parent="LARM_JOINT5_Link" prefix="LARM_" topic_name="ft_left/raw/data">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:ati_ft_sensor>
+
+    <xacro:ati_ft_sensor parent="RARM_JOINT5_Link" prefix="RARM_" topic_name="ft_right/raw/data">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:ati_ft_sensor>
+
+    <!-- Tool Changers -->
+    <xacro:tool_changer prefix="LARM_" parent="LARM_ft_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:tool_changer>
+
+    <xacro:tool_changer prefix="RARM_" parent="RARM_ft_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:tool_changer>
+
+    <!-- Grippers -->
+    <!-- <xacro:robotiq_140_gripper prefix="LARM_" parent="LARM_changer_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:robotiq_140_gripper>
+
+    <xacro:robotiq_140_gripper prefix="RARM_" parent="RARM_changer_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:robotiq_140_gripper> -->
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+          <robotNamespace>/chonk</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    <!-- Camera -->
+    <!-- <xacro:nx_intel_realsense_mount prefix="intel_realsense"/> -->
+
+</robot>

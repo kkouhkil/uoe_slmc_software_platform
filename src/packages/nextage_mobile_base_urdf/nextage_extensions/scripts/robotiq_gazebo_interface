@@ -1,0 +1,84 @@
+#!/usr/bin/env python
+
+# Copyright (c) 2022, University of Edinburgh
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+
+#  * Redistributions of source code must retain the above copyright notice,
+#    this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#  * Neither the name of  nor the names of its contributors may be used to
+#    endorse or promote products derived from this software without specific
+#    prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+import rospy
+from sensor_msgs.msg  import JointState
+from std_msgs.msg import Float64MultiArray
+from trajectory_msgs.msg  import JointTrajectory, JointTrajectoryPoint
+
+class RobotiqDriver:
+    def __init__(self):
+        self.command_topic_name = 'command'
+        self.command_topic_name_raw = rospy.get_param('~command_raw', 'topic_name_raw')
+        self.prefix = rospy.get_param('~prefix', '')
+        self.topic_name = 'joint_states'
+        self.width = rospy.get_param('~Width', 0.85)
+        self.range = rospy.get_param('~Range', 0.804)
+        self.topic_name_raw = rospy.get_param('~topic_name_raw', 'command_raw')
+
+        self.joint_names = [self.prefix + 'gripper_finger1_joint', self.prefix + 'gripper_finger2_joint', self.prefix + 'gripper_finger1_inner_knuckle_joint', self.prefix + 'gripper_finger2_inner_knuckle_joint', self.prefix + 'gripper_finger1_finger_tip_joint', self.prefix + 'gripper_finger2_finger_tip_joint']
+        self.control_joint_name = self.prefix + 'gripper_open_joint'
+
+        self.msg = Float64MultiArray()
+        self.msg.data = [0.0] * 6
+
+        self.pub = rospy.Publisher(self.command_topic_name, Float64MultiArray, queue_size=1)
+        self.pub_cmd = rospy.Publisher(self.command_topic_name_raw, JointTrajectory, queue_size=1)
+
+        rospy.loginfo('Initialising gripper')
+        rospy.Subscriber(self.topic_name, JointState, self.callback)
+        rospy.Subscriber(self.topic_name_raw, Float64MultiArray, self.callback_raw)
+
+    def callback(self, msg):
+        update_dict = dict(zip(msg.name, msg.position))
+        if self.control_joint_name in update_dict.keys():
+            q = self.range - update_dict[self.control_joint_name] / self.width * self.range
+            self.msg.data = [q, q, q, q, -q, -q]
+            self.pub.publish(self.msg)
+
+    def callback_raw(self, msg):
+        rospy.loginfo(msg.data)
+        if len(msg.data) == 1:
+            goal = JointTrajectory()
+            goal.header.stamp = rospy.Time.now()
+            goal.joint_names = [self.control_joint_name]
+            goal.points.append(JointTrajectoryPoint())
+            goal.points[0].time_from_start = rospy.Duration(0.4)
+            val = min(max(1.0 - msg.data[0], 0.0), 0.9)
+            goal.points[0].positions = [val * self.width]
+            goal.points[0].velocities = [0.0]
+            self.pub_cmd.publish(goal)
+
+if __name__ == '__main__':
+    rospy.init_node('robotiq_driver', anonymous=True)
+    try:
+        driver = RobotiqDriver()
+        rospy.spin()
+    except rospy.exceptions.ROSInterruptException:
+        pass

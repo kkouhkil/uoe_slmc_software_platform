@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot name="ms_azure_kinect" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Arguments -->
+  <xacro:arg name="prefix" default=""/>
+
+  <!-- Includes -->
+  <xacro:include filename="$(find abb_mp_camera_description)/urdf/azure_kinect_macro.xacro"/>
+
+  <!-- Instantiations -->
+  <xacro:ms_azure_kinect prefix="$(arg prefix)"/>
+</robot>

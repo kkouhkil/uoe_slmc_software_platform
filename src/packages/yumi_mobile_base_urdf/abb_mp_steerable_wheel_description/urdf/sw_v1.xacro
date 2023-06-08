@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot name="abb_sw_v1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Arguments -->
+  <xacro:arg name="prefix" default=""/>
+
+  <!-- Includes -->
+  <xacro:include filename="$(find abb_mp_steerable_wheel_description)/urdf/sw_v1_macro.xacro"/>
+
+  <!-- Instantiations -->
+  <xacro:abb_sw_v1 prefix="$(arg prefix)"/>
+</robot>

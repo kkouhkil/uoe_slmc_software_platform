@@ -1,0 +1,29 @@
+chassis_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 12.67
+    inertia:
+      type: "per_element"
+      ixx: 0.44
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.45
+      iyz: 0.0
+      izz: 0.66
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "chassis_link.stl"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "chassis_link.stl"

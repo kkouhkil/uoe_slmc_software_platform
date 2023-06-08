@@ -1,0 +1,11 @@
+plate_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.14935 0.0 0.17194"
+    rpy: "0.0 32.0 0.0"
+
+attachment_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.015 0.0 -0.0125"
+    rpy: "0.0 0.0 0.0"

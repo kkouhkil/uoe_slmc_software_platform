@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Creates a 'gazebo' link tag (based on properties loaded from an YAML file) -->
+  <xacro:macro name="gazebo_link_tag" params="prefix=^ gazebo_properties=^ link">
+    <xacro:extract_data key="${link}" properties="${gazebo_properties}"/>
+
+    <gazebo reference="${prefix}${link}">
+      <xacro:if value="${'material' in data}">
+        <material>${data['material']}</material>
+      </xacro:if>
+      
+      <xacro:if value="${'selfCollide' in data}">
+        <selfCollide>${data['selfCollide']}</selfCollide>
+      </xacro:if>
+
+      <xacro:if value="${'mu1' in data}">
+        <mu1 value="${data['mu1']}"/>
+      </xacro:if>
+
+      <xacro:if value="${'mu2' in data}">
+        <mu2 value="${data['mu2']}"/>
+      </xacro:if>
+
+      <xacro:if value="${'kp' in data}">
+        <kp value="${data['kp']}"/>
+      </xacro:if>
+
+      <xacro:if value="${'kd' in data}">
+        <kd value="${data['kd']}"/>
+      </xacro:if>
+
+      <xacro:if value="${'fdir1' in data}">
+        <fdir1 value="${data['fdir1']}"/>
+      </xacro:if>
+      
+      <xacro:if value="${'max_vel' in data}">
+        <maxVel value="${data['max_vel']}"/>
+      </xacro:if>
+
+      <xacro:if value="${'min_depth' in data}">
+        <minDepth value="${data['min_depth']}"/>
+      </xacro:if>
+
+      <xacro:if value="${'turn_gravity_off' in data}">
+        <turnGravityOff>${data['turn_gravity_off']}</turnGravityOff>
+      </xacro:if>
+    </gazebo>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,10 @@
+fixed_frame: /base_link
+# There is one entry for each URDF that should be filtered
+models:
+- model: "robot_description"
+  geometry_type: "collision" # "visual" or "collision"
+  scale: 1.3
+  ignore: ["nextage_base", "HEAD_JOINT0_Link", "HEAD_JOINT1_Link", "LARM_JOINT4_Link_cables", "RARM_JOINT4_Link_cables"]
+# how far in front of the robot model is still deleted? (e.g. 0.05 = 5cm)
+depth_distance_threshold: 0.05
+show_gui: false

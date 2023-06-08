@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="spawn_controllers" default="true" />
+  <arg name="controllers_include" default="$(find chonk_gazebo)/launch/include/chonk_control.launch" />
+  <arg name="model" default="$(find chonk_description)/urdf/chonk.urdf.xacro" />
+
+  <include file="$(find chonk_gazebo)/launch/include/gazebo.launch">
+    <arg name="model" value="$(arg model)"/>
+    <arg name="spawn_controllers" value="$(arg spawn_controllers)"/>
+    <arg name="controllers_include" value="$(arg controllers_include)"/>
+  </include>
+
+  <include file="$(find chonk_gazebo)/launch/include/state_estimation.launch"/>
+</launch>

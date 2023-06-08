@@ -1,0 +1,3 @@
+- git: {local-name: nextagea, uri: 'git@github.com:ipab-slmc/nextagea.git', version: master}
+- git: {local-name: nextage_extensions, uri: 'git@github.com:ipab-slmc/nextage_extensions.git'}
+- git: {local-name: donkey_description, uri: 'git@github.com:ipab-slmc/donkey_description.git', version: main}

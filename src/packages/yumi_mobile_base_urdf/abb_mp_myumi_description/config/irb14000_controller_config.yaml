@@ -1,0 +1,73 @@
+/:
+
+  # Position Controllers ---------------------------------------
+  robl_joint_1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_1
+    pid: {p: 75.0, i: 0.1, d: 1.0}
+    
+  robl_joint_2_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_2
+    pid: {p: 850.0, i: 0.1, d: 1.0}
+    
+  robl_joint_3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_3
+    pid: {p: 27.5, i: 0.1, d: 1.0}
+    
+  robl_joint_4_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_4
+    pid: {p: 300.0, i: 0.1, d: 1.0}
+    
+  robl_joint_5_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_5
+    pid: {p: 10.0, i: 0.1, d: 0.0}  
+    
+  robl_joint_6_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_6
+    pid: {p: 16.0, i: 0.1, d: 0.1}
+    
+  robl_joint_7_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robl_joint_7
+    pid: {p: 10.0, i: 0.1, d: 0.0}  
+    
+  robr_joint_1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_1
+    pid: {p: 75.0, i: 0.1, d: 1.0}
+    
+  robr_joint_2_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_2
+    pid: {p: 850.0, i: 0.1, d: 1.0}
+    
+  robr_joint_3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_3
+    pid: {p: 27.5, i: 0.1, d: 1.0}
+    
+  robr_joint_4_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_4
+    pid: {p: 300.0, i: 0.1, d: 1.0}
+    
+  robr_joint_5_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_5
+    pid: {p: 10.0, i: 0.1, d: 0.0}
+    
+  robr_joint_6_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_6
+    pid: {p: 16.0, i: 0.1, d: 0.1}
+    
+  robr_joint_7_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: yumi_robr_joint_7
+    pid: {p: 10.0, i: 0.1, d: 0.0}
+  

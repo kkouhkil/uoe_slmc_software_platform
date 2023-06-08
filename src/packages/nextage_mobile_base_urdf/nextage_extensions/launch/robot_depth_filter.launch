@@ -1,0 +1,31 @@
+<launch>
+  <arg name="nodelet" default="false"/>
+
+  <!-- set lowest png compression level -->
+  <param name="/depth_to_rgb/image_raw/filtered/compressed/format" value="png"/>
+  <param name="/depth_to_rgb/image_raw/filtered/compressed/png_level" value="1"/>
+
+  <!-- Launch nodelet -->
+  <node if="$(arg nodelet)" pkg="nodelet" type="nodelet" name="realtime_urtf_filter_nodelet" args="load realtime_urdf_filter/RealtimeURDFFilterNodelet camera_nodelet_manager" output="screen">
+    <param name="image_transport" value="compressed"/>
+    <remap from="~input_depth" to="/depth_to_rgb/image_raw"/>
+    <remap from="~output_depth" to="/depth_to_rgb/image_raw/filtered" />
+    <remap from="~output_mask" to="/urdf_filtered_mask" />
+
+    <rosparam command="load" file="$(find nextage_extensions)/configs/depth_filter_parameters.yaml"/>
+
+    <param name="camera_frame" value="rgb_camera_link"/>
+  </node>
+
+  <node unless="$(arg nodelet)"
+    pkg="realtime_urdf_filter" type="realtime_urdf_filter" name="realtime_urdf_filter" output="screen">
+    <param name="image_transport" value="compressed"/>
+    <remap from="~input_depth" to="/depth_to_rgb/image_raw"/>
+    <remap from="~output_depth" to="/depth_to_rgb/image_raw/filtered" />
+    <remap from="~output_mask" to="/urdf_filtered_mask" />
+
+    <rosparam command="load" file="$(find nextage_extensions)/configs/depth_filter_parameters.yaml"/>
+
+    <param name="camera_frame" value="rgb_camera_link"/>
+  </node>
+</launch>

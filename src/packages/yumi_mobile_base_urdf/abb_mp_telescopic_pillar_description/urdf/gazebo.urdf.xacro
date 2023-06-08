@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot name="abb_myumi_v2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo>
+    <plugin name="gazebo_ros_controller" filename="libgazebo_ros_control.so">
+      <robotNamespace>/abb_myumi_v2</robotNamespace>
+      <!--robotNamespace>gazebo_ros_control/DefaultRobotHWSim</robotNamespace-->
+    </plugin>
+  </gazebo>
+
+</robot>

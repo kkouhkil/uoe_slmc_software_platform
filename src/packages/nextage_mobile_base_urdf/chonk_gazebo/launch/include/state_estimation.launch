@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <group ns="chonk">
+        <!-- Start EKF for localization -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" respawn="true">
+            <rosparam command="load" file="$(find donkey_gazebo)/config/localization.yaml" />
+        </node>
+        <node pkg="donkey_gazebo" type="state_estimation" name="StateEstimationRepublisher" respawn="true">
+            <rosparam command="load" file="$(find donkey_gazebo)/config/state_measurement.yaml" />
+        </node>
+    </group>
+</launch>

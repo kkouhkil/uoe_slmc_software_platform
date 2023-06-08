@@ -1,0 +1,71 @@
+servo_frame_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.084"
+    rpy: "0.0 0.0 0.0"
+
+fingers_frame_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.1142"
+    rpy: "0.0 0.0 0.0"
+
+vacuum_1_frame_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0274 0.0185 0.0375"
+    rpy: "0.0 90.0 0.0"
+
+vacuum_2_frame_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.0274 0.0185 0.0375"
+    rpy: "-180.0 90.0 0.0"
+
+camera_frame_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.0073 0.0283 0.0351"
+    rpy: "-90.0 90.0 0.0"
+
+finger_1_base_joint:
+  type: "fixed" # Should be "prismatic"
+  origin:
+    xyz: "-0.0125 0.0065 0.084"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "1.0 0.0 0.0"
+  limits:
+    lower: 0.0
+    upper: 0.025
+    velocity: 0.025
+    effort: 20.0
+
+finger_2_base_joint:
+  type: "fixed" # Should be "prismatic"
+  origin:
+    xyz: "0.0125 -0.0065 0.084"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "1.0 0.0 0.0"
+  limits:
+    lower: 0.0
+    upper: 0.025
+    velocity: 0.025
+    effort: 20.0
+  mimic:
+    joint_to_mimic: "finger_1_base_joint"
+    multiplier: -1.0
+    offset: 0.0
+
+finger_1_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+
+finger_2_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"

@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+
+<robot name="generic_base" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="base_cylinder_inertia_def" params="r h mass">
+        <inertia ixx="${mass*(3*r*r+h*h)/12}" ixy="0" ixz="0" iyy="${mass*(3*r*r+h*h)/12}" iyz="0" izz="${mass*r*r/2}"/>
+    </xacro:macro>
+
+    <xacro:macro name="base_box_inertia_def" params="x y z mass">
+        <inertia iyy="${mass*(z*z+x*x)/12.0}" ixx="${mass*(y*y+z*z)/12.0}" izz="${mass*(x*x+y*y)/12.0}" ixy="0.0" iyz="0.0" ixz="0.0"/>
+    </xacro:macro>
+
+    <xacro:macro name="base_sphere_inertia_def" params="radius mass">
+        <inertia ixx="${2/5*mass*radius*radius}" ixy="0" ixz="0" iyy="${2/5*mass*radius*radius}" iyz="0" izz="${2/5*mass*radius*radius}"/>
+    </xacro:macro>
+
+    <xacro:macro name="gazebo_mecanum_link" params="parent radius mass">
+        <link name="${parent}_passive">
+            <inertial>
+                <mass value="1.0"/>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <xacro:base_sphere_inertia_def radius="${radius}" mass="1.0"/>
+            </inertial>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${parent}_passive_joint" type="continuous">
+            <axis xyz="0 1 0"/>
+            <limit effort="100" velocity="100.0"/>
+            <dynamics damping="0.0" friction="0.0"/>
+            <safety_controller k_velocity="10.0"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <parent link="${parent}"/>
+            <child link="${parent}_passive"/>
+        </joint>
+        <gazebo reference="${parent}_passive_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+        <!-- Passive joint transmission with effort interface.
+             Workaround to get all joints to publish a state.
+             Do NOT use these joints for control! -->
+        <transmission name="${parent}_passive_joint_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${parent}_passive_joint">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${parent}_passive_joint_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+        <!-- Contact properties -->
+        <gazebo reference="${parent}_passive">
+            <mu>5</mu>
+            <mu2>5</mu2>
+            <dampingFactor>0.00001</dampingFactor>
+            <selfCollide>0</selfCollide>
+            <kp>1e6</kp>
+            <kd>1e2</kd>
+            <maxVel>2.0</maxVel>
+            <minDepth>0.001</minDepth>
+        </gazebo>
+    </xacro:macro>
+
+    <!-- Must specify parent and prefix params when instantiating -->
+    <xacro:macro name="meccanum_wheel" params="prefix parent *origin radius height mass *axis">
+        <link name="${prefix}wheel_link">
+            <inertial>
+                <mass value="${mass}"/>
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+                <xacro:base_cylinder_inertia_def r="${radius}" h="${height}" mass="${mass}"/>
+            </inertial>
+            <visual>
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="${height}" radius="${radius}"/>
+                </geometry>
+            </visual>
+        </link>
+        <joint name="${prefix}wheel_joint" type="continuous">
+            <axis xyz="0 1 0"/>
+            <limit effort="100" velocity="100"/>
+            <dynamics damping="0.0" friction="0.0"/>
+            <safety_controller k_velocity="10.0"/>
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}"/>
+            <child link="${prefix}wheel_link"/>
+        </joint>
+        <xacro:gazebo_mecanum_link parent="${prefix}wheel_link" radius="${radius}" mass="${mass}"/>
+        <gazebo>
+            <!-- Mecanum plugin -->
+            <plugin name="${prefix}wheel_controller" filename="libmecanum_gazebo_plugin.so">
+                <wheelLinkName>${prefix}wheel_link</wheelLinkName>
+                <baseLinkName>base_link</baseLinkName>
+                <xacro:insert_block name="axis"/>
+            </plugin>
+        </gazebo>
+        <gazebo reference="${prefix}wheel_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+        <gazebo reference="${prefix}wheel_link">
+            <dampingFactor>0.001</dampingFactor>
+        </gazebo>
+        <transmission name="${prefix}wheel_joint_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}wheel_joint">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}wheel_joint_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <!-- Must specify parent and prefix params when instantiating -->
+    <xacro:macro name="meccanum_base" params="prefix size_x size_y size_z mass">
+
+        <!-- Base link-->
+        <link name="base_link"/>
+        <link name="donkey_base">
+            <inertial>
+                <mass value="${mass}"/>
+                <origin rpy="0 0 0" xyz="0.0 0.0 ${base_height/2 + 0.01}"/>
+                <xacro:base_box_inertia_def x="${base_length}" y="${base_width}" z="${base_height}" mass="${mass}"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://donkey_description/meshes/donkey_colourised_decimated.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.0 0.0 ${base_height/2 + 0.05}"/>
+                <geometry>
+                    <box size="${base_length} ${base_width} ${base_height-0.15}"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="donkey_base">
+            <dampingFactor>0.001</dampingFactor>
+        </gazebo>
+
+        <joint name="donkey_base_link_joint" type="fixed">
+            <child link="donkey_base"/>
+            <parent link="base_link"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+    <xacro:macro name="meccanum_base_mount" params="prefix child *origin">
+
+        <joint name="donkey_base_mount_joint" type="fixed">
+            <child link="${child}"/>
+            <parent link="base_link"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+    </xacro:macro>
+</robot>

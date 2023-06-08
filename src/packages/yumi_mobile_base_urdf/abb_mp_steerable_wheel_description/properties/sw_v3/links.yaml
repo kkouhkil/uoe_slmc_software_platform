@@ -1,0 +1,60 @@
+steering_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 57.3 0.0"
+    mass: 2.6
+    inertia:
+      type: "per_element"
+      ixx: 0.0018
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.0017
+      iyz: -0.0004
+      izz: 0.0013
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "steering_link.stl"
+    material: "light_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "steering_link.stl"
+
+drive_wheel_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    mass: 1.31
+    inertia:
+      type: "per_element"
+      ixx: 0.0018
+      ixy: 0.0
+      ixz: 0.0
+      iyy: 0.0017
+      iyz: 0.0
+      izz: 0.0013
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "drive_wheel_link.stl"
+    material: "dark_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.0"
+      rpy: "90.0 0.0 0.0"
+    geometry:
+      type: "cylinder"
+      length: 0.047
+      radius: 0.0865

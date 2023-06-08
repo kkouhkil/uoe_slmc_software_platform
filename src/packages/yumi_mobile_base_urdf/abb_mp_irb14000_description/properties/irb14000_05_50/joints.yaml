@@ -1,0 +1,265 @@
+base_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+
+robl_base_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.047607 0.070008 0.411486"
+    rpy: "-56.097019305220833019 32.61338010511472163 -47.292761053473093"
+
+robl_joint_1:
+  type: "revolute"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 0 1"
+  limits:
+    lower:   -168.5
+    upper:    168.5
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  1.060
+    friction: 0.000
+
+robl_joint_2:
+  type: "revolute"
+  origin:
+    xyz: "-0.03 0.0 0.1075"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 1 0"
+  limits:
+    lower:   -143.5
+    upper:    43.50
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  1.090
+    friction: 0.000
+
+robl_joint_3:
+  type: "revolute"
+  origin:
+    xyz: "0.03 0.0 0.1603"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 0 1"
+  limits:
+    lower:   -168.5
+    upper:    168.5
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  0.610
+    friction: 0.000
+
+robl_joint_4:
+  type: "revolute"
+  origin:
+    xyz: "0.0405 0.0 0.0912"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 1 0"
+  limits:
+    lower:   -123.5
+    upper:    80.00
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  0.080
+    friction: 0.000
+
+robl_joint_5:
+  type: "revolute"
+  origin:
+    xyz: "0.1396 0.0 0.0405"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "1 0 0"
+  limits:
+    lower:   -290.0
+    upper:    290.0
+    velocity: 400.0
+    effort:   1.000
+  dynamics:
+    damping:  0.080
+    friction: 0.000
+
+robl_joint_6:
+  type: "revolute"
+  origin:
+    xyz: "0.1254 0.0 -0.027"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 1 0"
+  limits:
+    lower:   -88.00
+    upper:    135.0
+    velocity: 400.0
+    effort:   1.000
+  dynamics:
+    damping:  0.080
+    friction: 0.000
+
+robl_joint_7:
+  type: "revolute"
+  origin:
+    xyz: "0.036 0.0 0.027"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "1 0 0"
+  limits:
+    lower:   -229.0
+    upper:    229.0
+    velocity: 400.0
+    effort:   1.000
+  dynamics:
+    damping:  0.039
+    friction: 0.000
+
+robl_joint_7_flange:
+  type: "fixed"
+  origin:
+    xyz: "0 0 0"
+    rpy: "0 0 0"
+
+robl_flange_tool0:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 90.0 0.0"
+
+robr_base_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.047607 -0.070008 0.411486"
+    rpy: "56.097019305220833019 32.61338010511472163 47.292761053473093"
+
+robr_joint_1:
+  type: "revolute"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 0 1"
+  limits:
+    lower:   -168.5
+    upper:    168.5
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  1.060
+    friction: 0.000
+
+robr_joint_2:
+  type: "revolute"
+  origin:
+    xyz: "-0.03 0.0 0.1075"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 1 0"
+  limits:
+    lower:   -143.5
+    upper:    43.50
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  1.090
+    friction: 0.000
+
+robr_joint_3:
+  type: "revolute"
+  origin:
+    xyz: "0.03 0.0 0.1603"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 0 1"
+  limits:
+    lower:   -168.5
+    upper:    168.5
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  0.610
+    friction: 0.000
+
+robr_joint_4:
+  type: "revolute"
+  origin:
+    xyz: "0.0405 0 0.0912"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 1 0"
+  limits:
+    lower:   -123.5
+    upper:    80.00
+    velocity: 180.0
+    effort:   10.00
+  dynamics:
+    damping:  0.080
+    friction: 0.000
+
+robr_joint_5:
+  type: "revolute"
+  origin:
+    xyz: "0.1396 0.0 0.0405"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "1 0 0"
+  limits:
+    lower:   -290.0
+    upper:    290.0
+    velocity: 400.0
+    effort:   1.000
+  dynamics:
+    damping:  0.080
+    friction: 0.000
+
+robr_joint_6:
+  type: "revolute"
+  origin:
+    xyz: "0.1254 0.0 -0.027"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "0 1 0"
+  limits:
+    lower:   -88.00
+    upper:    135.0
+    velocity: 400.0
+    effort:   1.000
+  dynamics:
+    damping:  0.080
+    friction: 0.000
+
+robr_joint_7:
+  type: "revolute"
+  origin:
+    xyz: "0.036 0.0 0.027"
+    rpy: "0.0 0.0 0.0"
+  axis:
+    xyz: "1 0 0"
+  limits:
+    lower:   -229.0
+    upper:    229.0
+    velocity: 400.0
+    effort:   1.000
+  dynamics:
+    damping:  0.039
+    friction: 0.000
+
+robr_joint_7_flange:
+  type: "fixed"
+  origin:
+    xyz: "0 0 0"
+    rpy: "0 0 0"
+
+robr_flange_tool0:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 90.0 0.0"

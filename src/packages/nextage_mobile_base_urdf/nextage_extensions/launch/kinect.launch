@@ -1,0 +1,19 @@
+<launch>
+    <!-- set lowest png compression level -->
+    <param name="/ir/image_raw/compressed/format" value="png" />
+    <param name="/ir/image_raw/compressed/png_level" value="1" />
+
+    <arg name="ir_mono8_scaling_factor" default="1.0" />
+
+    <!-- image modes: -->
+    <!-- colour modes: 720P (1280x720), 1080P (1920x1080), 1440P (2560x1440), 1536P (2048x1536), 2160P (3840x2160), 3072P (4096x3072, 15Hz) -->
+    <!-- depth  modes: NFOV_UNBINNED (640x576, 30Hz), NFOV_2X2BINNED (320x288, 30Hz), WFOV_UNBINNED (1024x1024, 15Hz), WFOV_2X2BINNED (512x512, 30Hz), and PASSIVE_IR (1024x1024, 30Hz) -->
+    <include file="$(find azure_kinect_ros_driver)/launch/kinect_rgbd.launch">
+        <arg name="color_resolution" value="720P"/>
+        <arg name="fps" value="30"/>
+        <arg name="depth_mode" value="NFOV_UNBINNED"/>
+        <arg name="rescale_ir_to_mono8" value="true"/>
+        <arg name="ir_mono8_scaling_factor" value="$(arg ir_mono8_scaling_factor)" />
+        <arg name="overwrite_robot_description" value="false"/>
+    </include>
+</launch>

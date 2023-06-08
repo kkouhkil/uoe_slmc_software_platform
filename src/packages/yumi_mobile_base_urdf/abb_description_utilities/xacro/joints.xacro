@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Creates a 'joint' tag (based on properties loaded from an YAML file) -->
+  <xacro:macro name="joint_tag" params="prefix=^ joint_properties=^ name parent child">
+    <xacro:extract_data key="${name}" properties="${joint_properties}"/>
+
+    <joint name="${prefix}${name}" type="${data['type']}">
+      <!-- Parent and child -->
+      <parent link="${prefix}${parent}"/>
+      <child  link="${prefix}${child}"/>
+
+      <!-- Origin -->
+      <xacro:if value="${'origin' in data}">
+        <xacro:origin_tag data="${data['origin']}"/>
+      </xacro:if>
+
+      <!-- Axis -->
+      <xacro:if value="${'axis' in data}">
+        <xacro:axis_tag data="${data['axis']}"/>
+      </xacro:if>
+
+      <!-- Limits (revolute) -->
+      <xacro:if value="${data['type'] == 'revolute'}">
+        <xacro:revolute_limit_tag data="${data['limits']}"/>
+      </xacro:if>
+
+      <!-- Limits (continuous) -->
+      <xacro:if value="${data['type'] == 'continuous'}">
+        <xacro:if value="${'limits' in data}">
+          <xacro:continuous_limit_tag data="${data['limits']}"/>
+        </xacro:if>
+      </xacro:if>
+
+      <!-- Limits (prismatic) -->
+      <xacro:if value="${data['type'] == 'prismatic'}">
+        <xacro:prismatic_limit_tag data="${data['limits']}"/>
+      </xacro:if>
+
+      <!-- Dynamics -->
+      <xacro:if value="${'dynamics' in data}">
+        <xacro:dynamics_tag data="${data['dynamics']}"/>
+      </xacro:if>
+
+      <!-- Mimic -->
+      <xacro:if value="${'mimic' in data}">
+        <xacro:mimic_tag data="${data['mimic']}" type="${data['type']}"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <!-- ============================================== Support Macros =============================================== -->
+
+  <!-- Creates an 'axis' tag -->
+  <xacro:macro name="axis_tag" params="data">
+    <axis xyz="${data['xyz']}"/>
+  </xacro:macro>
+
+  <!-- Creates a 'limit' tag (for a revolute joint) -->
+  <xacro:macro name="revolute_limit_tag" params="data">
+    <limit lower="${radians(data['lower'])}"
+           upper="${radians(data['upper'])}"
+           velocity="${radians(data['velocity'])}"
+           effort="${data['effort']}"/>
+  </xacro:macro>
+
+  <!-- Creates a 'limit' tag (for a continuous joint) -->
+  <xacro:macro name="continuous_limit_tag" params="data">
+    <limit velocity="${radians(data['velocity'])}"
+           effort="${data['effort']}"/>
+  </xacro:macro>
+
+  <!-- Creates a 'limit' tag (for a prismatic joint) -->
+  <xacro:macro name="prismatic_limit_tag" params="data">
+    <limit lower="${data['lower']}"
+           upper="${data['upper']}"
+           velocity="${data['velocity']}"
+           effort="${data['effort']}"/>
+  </xacro:macro>
+
+  <!-- Creates a 'dynamics' tag -->
+  <xacro:macro name="dynamics_tag" params="data">
+    <dynamics damping="${data['damping']}"
+              friction="${data['friction']}"/>
+  </xacro:macro>
+
+  <!-- Creates a 'mimic' tag -->
+  <xacro:macro name="mimic_tag" params="prefix=^ data type">
+    <xacro:property name="multiplier" value="1.0"/>
+    <xacro:property name="offset"     value="0.0"/>
+
+    <xacro:if value="${'multiplier' in data}">
+      <xacro:property name="multiplier" value="${data['multiplier']}"/>
+    </xacro:if>
+
+    <xacro:if value="${'offset' in data}">
+      <xacro:if value="${type == 'revolute'}">
+        <xacro:property name="offset" value="${radians(data['offset'])}"/>
+      </xacro:if>
+
+      <xacro:if value="${type == 'continuous'}">
+        <xacro:property name="offset" value="${radians(data['offset'])}"/>
+      </xacro:if>
+
+      <xacro:if value="${type == 'prismatic'}">
+        <xacro:property name="offset" value="${data['offset']}"/>
+      </xacro:if>
+    </xacro:if>
+
+    <mimic joint="${prefix}${data['joint_to_mimic']}"
+           multiplier="${multiplier}"
+           offset="${offset}"/>
+  </xacro:macro>
+</robot>

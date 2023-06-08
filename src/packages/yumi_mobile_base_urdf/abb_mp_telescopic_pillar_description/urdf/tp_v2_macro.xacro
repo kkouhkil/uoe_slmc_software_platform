@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="abb_tp_v2" params="prefix">
+    <!-- Includes -->
+    <xacro:include filename="$(find abb_description_utilities)/xacro/common.xacro"/>
+    
+    <!-- Properties -->
+    <xacro:load_properties package="abb_mp_telescopic_pillar_description" model="tp_v2"/>
+
+    <!-- Links -->
+	  <xacro:link_tag name="base_link"/>
+	  <xacro:link_tag name="body_link"/>
+	  <xacro:link_tag name="top_link"/>
+
+    <!-- Joints -->
+    <xacro:joint_tag name="body_joint" parent="base_link" child="body_link"/>
+    <xacro:joint_tag name="top_joint"  parent="body_link" child="top_link"/>
+
+    <!-- Transmissions -->
+    <xacro:transmission_tag name="body_transmission" joint="body_joint"/>
+
+    <!-- Gazebo -->
+    <xacro:gazebo_link_tag link="base_link"/>
+    <xacro:gazebo_link_tag link="body_link"/>
+    
+    <!--xacro:include filename="$(find abb_mp_telescopic_pillar_description)/urdf/gazebo.urdf.xacro"/-->
+  </xacro:macro>
+</robot>

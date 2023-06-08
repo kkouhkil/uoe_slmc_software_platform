@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot name="DonkeyRobot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find donkey_description)/urdf/donkey.xacro" />
+
+    <xacro:donkey_base prefix="donkey_" donkey_gazebo_ros_control="true">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:donkey_base>
+
+    <link name="dummy_link"/>
+    <xacro:meccanum_base_mount prefix="donkey_" child="dummy_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:meccanum_base_mount>
+
+</robot>

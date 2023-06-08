@@ -1,0 +1,5 @@
+base_link:
+  material: "Gazebo/White"
+
+plate_link:
+  material: "Gazebo/Grey"

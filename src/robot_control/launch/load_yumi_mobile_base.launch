@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Set global arguments -->
+  <arg name="robot_name" default = "yumi_mobile_base"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find abb_mp_myumi_description)/urdf/myumi_v2.xacro'"/>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+    args="-x 0.0 -y 0.0 -z 0.0 -param robot_description -urdf -model abb_mp_myumi_description -J yumi_robl_joint_1 0.785 -J yumi_robr_joint_1 -0.785 " respawn="false" output="screen" 
+  />
+
+<!-- Load PID config for the joints, THIS IS LOW LEVEL CONTROLLERS -->
+    <rosparam file="$(find abb_mp_myumi_description)/config/gazebo_ros_control_params.yaml" command="load"/>
+
+<!-- Load controller configuration -->
+    <rosparam file="$(find abb_mp_myumi_description)/config/four_wheel_abb_controller_config.yaml" command="load"/>
+    <rosparam file="$(find abb_mp_myumi_description)/config/pillar_controller_config.yaml" command="load"/>
+    <rosparam file="$(find abb_mp_myumi_description)/config/irb14000_controller_config.yaml" command="load"/>
+        
+<!-- Spawn controllers -->
+    <node name="base_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/" 
+        args="robot_joint_publisher 
+        four_wheel_controller 
+        joint_state_controller 
+        pillar_position_controller
+        robl_joint_1_position_controller 
+        robl_joint_2_position_controller 
+        robl_joint_3_position_controller 
+        robl_joint_4_position_controller
+        robl_joint_5_position_controller 
+        robl_joint_6_position_controller
+        robl_joint_7_position_controller 
+        robr_joint_1_position_controller 
+        robr_joint_2_position_controller
+        robr_joint_3_position_controller 
+        robr_joint_4_position_controller
+        robr_joint_5_position_controller 
+        robr_joint_6_position_controller
+        robr_joint_7_position_controller"
+    />
+
+  <!-- <arg name="odo_topic"         default="/odom" /-->
+  <!-- <arg name="time_now"          default="true"/> -->
+  
+  <!--include 
+    file="$(find tf_server)/launch/tf_server_tf.launch">
+    <<arg name="odo_topic" value="$(arg odo_topic)"/>
+    <<arg name="time_now" value="$(arg time_now)"/> 
+  </include-->
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- <node name="rviz" pkg="rviz" type="rviz"/> -->
+
+</launch>

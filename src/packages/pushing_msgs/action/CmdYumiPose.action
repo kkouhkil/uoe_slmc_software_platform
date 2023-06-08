@@ -1,0 +1,11 @@
+# Define the goal
+geometry_msgs/Pose poseYumiR
+geometry_msgs/Pose poseYumiL
+geometry_msgs/Pose poseYumiBase
+float32 duration
+---
+# Define the result
+bool reached_goal
+---
+# Define a feedback message
+float32 progress

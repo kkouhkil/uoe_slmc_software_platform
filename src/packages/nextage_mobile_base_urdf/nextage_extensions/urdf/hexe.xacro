@@ -1,0 +1,94 @@
+<robot name="hex_e_ft_sensor" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="hexe_cylinder_inertia_def" params="r h mass">
+        <inertia ixx="${mass*(3*r*r+h*h)/12}" ixy="0" ixz="0" iyy="${mass*(3*r*r+h*h)/12}" iyz="0" izz="${mass*r*r/2}"/>
+    </xacro:macro>
+
+    <xacro:macro name="hexe_sphere_inertia_def" params="radius mass">
+        <inertia ixx="${2/5*mass*radius*radius}" ixy="0" ixz="0" iyy="${2/5*mass*radius*radius}" iyz="0" izz="${2/5*mass*radius*radius}"/>
+    </xacro:macro>
+
+    <!-- Define the HEX-E sensor -->
+    <xacro:macro name="hex_e_ft_sensor" params="prefix parent *origin topic_name">
+
+        <link name="${prefix}ft_link_base">
+            <visual>
+                <origin xyz="0 0 -0.0185" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.037" radius="0.035"/>
+                </geometry>
+                <material name="LightGrey">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 -0.0185" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.037" radius="0.04"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.347" />
+                <origin xyz="0 0 -0.0185" rpy="0 -0 0"/>
+                <xacro:hexe_cylinder_inertia_def r="0.04" h="0.037" mass="0.347"/>
+            </inertial>
+        </link>
+
+        <link name="${prefix}ft_Sensor_Link">
+            <inertial>
+                <mass value="0.0001" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <xacro:hexe_sphere_inertia_def radius="0.0001" mass="0.0001"/>
+            </inertial>
+        </link>
+
+        <link name="${prefix}ft_link">
+            <inertial>
+                <mass value="0.0001" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <xacro:hexe_sphere_inertia_def radius="0.0001" mass="0.0001"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}ft_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}ft_link_base"/>
+            <xacro:insert_block name="origin"/>
+            <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <joint name="${prefix}ft_sensor_joint" type="fixed">
+            <parent link="${prefix}ft_link_base"/>
+            <child link="${prefix}ft_Sensor_Link"/>
+            <origin xyz="0 0 -0.037" rpy="0 3.1415 1.57"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <joint name="${prefix}ft_sensor_offset_joint" type="fixed">
+            <parent link="${prefix}ft_Sensor_Link"/>
+            <child link="${prefix}ft_link"/>
+            <origin xyz="0 0 0" rpy="0 3.1415 1.57"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <gazebo reference="${prefix}ft_sensor_joint">
+            <disableFixedJointLumping>true</disableFixedJointLumping>
+            <sensor name="${prefix}ft_sensor" type="force_torque">
+                <force_torque>
+                <frame>parent</frame>
+                <measure_direction>child_to_parent</measure_direction>
+                </force_torque>
+            </sensor>
+        </gazebo>
+        <gazebo>
+            <plugin name="${prefix}ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+                <updateRate>500.0</updateRate>
+                <topicName>${topic_name}</topicName>
+                <jointName>${prefix}ft_sensor_joint</jointName>
+            </plugin>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

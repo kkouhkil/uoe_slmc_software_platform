@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="abb_sw_v2" params="prefix">
+    <!-- Includes -->
+    <xacro:include filename="$(find abb_description_utilities)/xacro/common.xacro"/>
+
+    <!-- Properties -->
+    <xacro:load_properties package="abb_mp_steerable_wheel_description" model="sw_v2"/>
+
+    <!-- Links -->
+	  <xacro:link_tag name="base_link"/>
+	  <xacro:link_tag name="steering_link"/>
+	  <xacro:link_tag name="drive_wheel_link"/>
+
+    <!-- Joints -->
+    <xacro:joint_tag name="steering_joint"    parent="base_link"     child="steering_link"/>
+    <xacro:joint_tag name="drive_wheel_joint" parent="steering_link" child="drive_wheel_link"/>
+
+    <!-- Transmissions -->
+    <xacro:transmission_tag name="steering_transmission"    joint="steering_joint"/>
+    <xacro:transmission_tag name="drive_wheel_transmission" joint="drive_wheel_joint"/>
+
+    <!-- Gazebo -->
+    <xacro:gazebo_link_tag link="steering_link"/>
+    <xacro:gazebo_link_tag link="drive_wheel_link"/>
+  </xacro:macro>
+</robot>

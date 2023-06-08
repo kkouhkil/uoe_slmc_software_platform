@@ -1,0 +1,67 @@
+base_link:
+  inertial:
+    origin:
+      xyz: "0.0 0.0 0.36"
+      rpy: "0.0 0.0 0.0"
+    mass: 5.5
+    inertia:
+      type: "per_element"
+      #ixx: 0.000001
+      ixx: 0.001422
+      ixy: 0.0
+      ixz: 0.0
+      #iyy: 0.000001
+      iyy: 0.001422
+      iyz: 0.0
+      #izz: 0.000001
+      izz: 0.000366
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.241"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "base_link.stl"
+    material: "dark_grey"
+  collision:
+    origin:
+      xyz: "0.0 0.0 0.241"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "base_link.stl"
+
+body_link:
+  inertial:
+    origin:
+      #xyz: "0.0 0.0 0.0097"
+      xyz: "0.0 0.0 0.36"
+      rpy: "0.0 0.0 0.0"
+    mass: 5.5
+    inertia:
+      type: "per_element"
+      #ixx: 0.000001
+      ixx: 0.001422
+      ixy: 0.0
+      ixz: 0.0
+      #iyy: 0.000001
+      iyy: 0.001422
+      iyz: 0.0
+      #izz: 0.000001
+      izz: 0.000366
+  visual:
+    origin:
+      xyz: "0.0 0.0 0.1"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "body_link.stl"
+    material: "light_grey"
+  collision:
+    origin:
+      #xyz: "0.0 0.0 0.15"
+      xyz: "0.0 0.0 0.1"
+      rpy: "0.0 0.0 0.0"
+    geometry:
+      type: "mesh"
+      filename: "body_link.stl"

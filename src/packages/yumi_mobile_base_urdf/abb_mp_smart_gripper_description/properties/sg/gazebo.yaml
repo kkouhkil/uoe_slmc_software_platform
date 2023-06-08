@@ -1,0 +1,19 @@
+base_link:
+  material: "Gazebo/White"
+  turn_gravity_off: true
+
+finger_1_base_link:
+  material: "Gazebo/White"
+  turn_gravity_off: true
+
+finger_2_base_link:
+  material: "Gazebo/White"
+  turn_gravity_off: true
+
+finger_1_link:
+  material: "Gazebo/Grey"
+  turn_gravity_off: true
+
+finger_2_link:
+  material: "Gazebo/Grey"
+  turn_gravity_off: true

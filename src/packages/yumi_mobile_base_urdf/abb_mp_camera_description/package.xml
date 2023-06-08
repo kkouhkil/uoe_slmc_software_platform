@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>abb_mp_camera_description</name>
+  <version>0.5.0</version>
+  <description>
+    Description of ABB mobile platform cameras.
+  </description>
+  <maintainer email="jon.tjerngren@se.abb.com">Jon Tjerngren</maintainer>
+  <license>Proprietary</license>
+  <author>Jon Tjerngren</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>abb_description_utilities</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+</package>

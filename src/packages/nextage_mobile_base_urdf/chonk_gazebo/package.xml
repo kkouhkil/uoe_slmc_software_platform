@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>chonk_gazebo</name>
+  <version>0.0.0</version>
+  <description>The chonk_gazebo package</description>
+  <maintainer email="elle.miller101@gmail.com">Elle Miller</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>chonk_description</depend>
+  <depend>robot_localization</depend>
+  <depend>donkey_gazebo</depend>
+</package>

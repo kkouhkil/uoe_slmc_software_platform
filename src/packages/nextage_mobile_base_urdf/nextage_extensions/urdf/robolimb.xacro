@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<robot name="robolimb" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="contact_parameters" params="name">
+        <gazebo reference="${name}">
+            <dampingFactor>0.005</dampingFactor>
+            <mu1 value="1.0" />
+            <mu2 value="1.0" />
+            <kp  value="1e5" />
+            <kd  value="1e2" />
+            <maxVel  value="1.0" />
+            <minDepth  value="0.0" />
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="robolimb_box_inertia_def" params="x y z mass">
+        <inertia iyy="${mass*(z*z+x*x)/12.0}" ixx="${mass*(y*y+z*z)/12.0}" izz="${mass*(x*x+y*y)/12.0}" ixy="0.0" iyz="0.0" ixz="0.0"/>
+    </xacro:macro>
+
+    <xacro:macro name="finger" params="prefix suffix *origin namespace:=''">
+
+        <joint name="${prefix}_${suffix}_joint" type="revolute">
+            <parent link="${prefix}_palm"/>
+            <child link="${prefix}_${suffix}_proximal"/>
+            <xacro:insert_block name="origin" />
+            <axis xyz="1 0 0"/>
+            <limit lower="0.0" upper="1.4" effort="100" velocity="1.0"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <transmission name="${prefix}_${suffix}_joint_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_${suffix}_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}_${suffix}_joint_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <gazebo reference="${prefix}_${suffix}_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}_${suffix}_proximal">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0.01" />
+                <mass value="0.01" />
+                <xacro:robolimb_box_inertia_def x="0.015" y="0.015" z="0.05" mass="0.01"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0.01" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.015 0.015 0.05"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0.01" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.015 0.015 0.05"/>
+                </geometry>
+            </collision>
+        </link>
+        <xacro:contact_parameters name="${prefix}_${suffix}_proximal"/>
+
+        <joint name="${prefix}_${suffix}_distal_joint" type="revolute">
+            <parent link="${prefix}_${suffix}_proximal"/>
+            <child link="${prefix}_${suffix}_distal"/>
+            <origin xyz="0 0.001942352839910257 0.0322177806507539" rpy="-2.20956221260475E-31 -0.119804644489992 1.5707963267949"/>
+            <axis xyz="0 -1 0"/>
+            <limit lower="0.0" upper="1.4" effort="100" velocity="1.0"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <transmission name="${prefix}_${suffix}_distal_joint_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_${suffix}_distal_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}_${suffix}_distal_joint_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <gazebo reference="${prefix}_${suffix}_distal_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}_${suffix}_distal">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.0 0.0 0.02" />
+                <mass value="0.001" />
+                <xacro:robolimb_box_inertia_def x="0.015" y="0.015" z="0.04" mass="0.001"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0.02" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.015 0.015 0.04"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0.02" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.015 0.015 0.04"/>
+                </geometry>
+            </collision>
+        </link>
+        <xacro:contact_parameters name="${prefix}_${suffix}_distal"/>
+    </xacro:macro>
+
+    <!-- Define robolimb macro -->
+    <xacro:macro name="robolimb" params="prefix dir:=1 namespace:=''">
+        <material name="gray">
+            <color rgba="0.4078 0.4078 0.4078 1"/>
+        </material>
+
+        <link name="${prefix}_palm">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0.005 0.07" />
+                <mass value="0.01" />
+                <xacro:robolimb_box_inertia_def x="0.072" y="0.038" z="0.1" mass="0.01"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0.005 0.07" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.072 0.038 0.1"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+            <visual>
+                <origin xyz="0 0 0.03" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.0225" length="0.06"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0.005 0.07" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.072 0.038 0.1"/>
+                </geometry>
+            </collision>
+            <collision>
+                <origin xyz="0 0 0.03" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.0225" length="0.06"/>
+                </geometry>
+            </collision>
+        </link>
+        <xacro:contact_parameters name="${prefix}_palm"/>
+
+        <joint name="${prefix}_5_joint" type="revolute">
+            <parent link="${prefix}_palm"/>
+            <child link="${prefix}_thumb_rotor"/>
+            <origin xyz="${dir * 0.017} -0.012 0.052" rpy="${dir * 4.59} 0 ${(1-dir)*1.57}"/>
+            <limit effort="100" velocity="100" lower="0" upper="1.4"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <transmission name="${prefix}_5_joint_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_5_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}_5_joint_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <gazebo reference="${prefix}_5_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}_thumb_rotor">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.01 0 0" />
+                <mass value="0.01" />
+                <xacro:robolimb_box_inertia_def x="0.02" y="0.025" z="0.02" mass="0.01"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0.01 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.02 0.025 0.02"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.01 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.02 0.025 0.02"/>
+                </geometry>
+            </collision>
+        </link>
+        <xacro:contact_parameters name="${prefix}_thumb_rotor"/>
+
+        <joint name="${prefix}_0_joint" type="revolute">
+            <parent link="${prefix}_thumb_rotor"/>
+            <child link="${prefix}_thumb"/>
+            <origin xyz="0.0263050752351218 0.0 0.0" rpy="1.5707963267949 0 0"/>
+            <limit effort="100" velocity="100" lower="0" upper="1.4"/>
+            <axis xyz="0 ${dir * -1} 0"/>
+            <dynamics damping="0.5" friction="0.5"/>
+        </joint>
+
+        <transmission name="${prefix}_0_joint_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_0_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}_0_joint_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+
+        <gazebo reference="${prefix}_0_joint">
+            <implicitSpringDamper>1</implicitSpringDamper>
+        </gazebo>
+
+        <link name="${prefix}_thumb">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.04 0 0" />
+                <mass value="0.001" />
+                <xacro:robolimb_box_inertia_def x="0.09" y="0.016" z="0.016" mass="0.001"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0.04 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.09 0.016 0.016"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.04 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.09 0.016 0.016"/>
+                </geometry>
+            </collision>
+        </link>
+        <xacro:contact_parameters name="${prefix}_thumb"/>
+
+        <xacro:finger prefix="${prefix}" suffix="1" namespace="${namespace}">
+            <origin xyz="${dir * 0.0272299450413061} 0.0069187173531022 0.1224609767976" rpy="0.349065850398866 0 0"/>
+        </xacro:finger>
+
+        <xacro:finger prefix="${prefix}" suffix="2" namespace="${namespace}">
+            <origin xyz="${dir * 0.00960494504130612} 0.00691871735310221 0.1274609767976" rpy="0.349065850398866 0 0"/>
+        </xacro:finger>
+        <xacro:finger prefix="${prefix}" suffix="3" namespace="${namespace}">
+            <origin xyz="${dir * -0.0091450549586939} 0.00716418059986021 0.12240760445288" rpy="0.309381766683156 0 0"/>
+        </xacro:finger>
+        <xacro:finger prefix="${prefix}" suffix="4" namespace="${namespace}">
+            <origin xyz="${dir * -0.0267700549586939} 0.0072220226254382 0.1164609767976" rpy="0.349065850398866 0 0"/>
+        </xacro:finger>
+
+    </xacro:macro>
+
+    <!-- Attach the robolimb -->
+    <xacro:macro name="robolimb_attach" params="prefix parent *origin">
+
+        <joint name="robolimb_${parent}_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}_palm"/>
+            <xacro:insert_block name="origin"/>
+            <axis xyz="1 0 0"/>
+        </joint>
+
+        <xacro:robolimb prefix="${prefix}" dir="-1" namespace="/nextagea/"/>
+
+        <joint name="robolimb_RARM_mount_joint" type="fixed">
+            <parent link="R${arm_tip}"/>
+            <child link="RHAND_MOUNT"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <axis xyz="1 0 0"/>
+        </joint>
+        <link name="RHAND_MOUNT">
+            <inertial>
+                <mass value="0.1"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="1.5e-07" ixy="0.0" ixz="0.0" iyy="3.33333333333e-07" iyz="0.0" izz="2.43333333333e-07"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 -0.085"/>
+                <geometry>
+                    <cylinder length="0.07" radius="0.03"/>
+                </geometry>
+                <material name="Black"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 -0.085"/>
+                <geometry>
+                    <cylinder length="0.07" radius="0.03"/>
+                </geometry>
+            </collision>
+        </link>
+
+    </xacro:macro>
+
+</robot>

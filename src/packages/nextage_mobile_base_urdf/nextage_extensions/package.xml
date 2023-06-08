@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>nextage_extensions</name>
+  <version>0.0.0</version>
+  <description>The nextage_extensions package</description>
+  <maintainer email="Christian.Rauch@ed.ac.uk">Christian Rauch</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>xacro</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf</depend>
+  <depend condition="$ROS_PYTHON_VERSION == 2">python_orocos_kdl</depend>
+  <depend condition="$ROS_PYTHON_VERSION == 3">python3-pykdl</depend>
+
+</package>

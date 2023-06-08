@@ -1,0 +1,77 @@
+chassis_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.02461"
+    rpy: "0.0 0.0 0.0"
+
+front_left_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.225 0.2 0.23655"
+    rpy: "0.0 0.0 0.0"
+
+front_right_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.225 -0.2 0.23655"
+    rpy: "0.0 0.0 0.0"
+
+rear_left_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.225 0.2 0.23655"
+    rpy: "0.0 0.0 0.0"
+
+rear_right_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.225 -0.2 0.23655"
+    rpy: "0.0 0.0 0.0"
+
+front_laser_scanner_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.10789 0.0 0.2725"
+    rpy: "0.0 0.0 0.0"
+
+rear_laser_scanner_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.23835 0.0 0.2725"
+    rpy: "0.0 0.0 180.0"
+
+chassi_pillar_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.06 0.0 0.003"
+    rpy: "0.0 0.0 0.0"
+
+pillar_yumi_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.234995 0.0 -0.108"
+    rpy: "0.0 0.0 0.0"
+
+yumi_robl_sg_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+
+yumi_robr_sg_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.0 0.0 0.0"
+    rpy: "0.0 0.0 0.0"
+
+yumi_cs_joint:
+  type: "fixed"
+  origin:
+    xyz: "-0.09 0 0.469"
+    rpy: "0.0 0.0 0.0"
+
+cs_camera_joint:
+  type: "fixed"
+  origin:
+    xyz: "0.03 0 0.03"
+    rpy: "0.0 0.0 0.0"

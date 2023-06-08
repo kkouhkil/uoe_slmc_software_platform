@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<robot name="donkey_base" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find donkey_description)/urdf/base/base.xacro" />
+
+    <xacro:macro name="donkey_base" params="prefix *origin donkey_gazebo_ros_control:=true">
+        <xacro:property name="wheel_radius" value="0.095" />
+        <xacro:property name="wheel_thickness" value="0.10" />
+        <xacro:property name="wheel_mass" value="8.0" />
+        <xacro:property name="wheel_base" value="0.72" />
+        <xacro:property name="track_gauge" value="0.5" />
+        <xacro:property name="base_mass" value="200.0" />
+        <xacro:property name="base_height" value="0.877" />
+        <xacro:property name="base_length" value="1.007" />
+        <xacro:property name="base_width" value="0.707" />
+
+        <xacro:meccanum_base prefix="donkey_" size_x="${base_length}" size_y="${base_width}" size_z="${base_height}" mass="${base_mass}"/>
+
+        <xacro:meccanum_wheel prefix="fl_" parent="donkey_base" radius="${wheel_radius}" height="${wheel_thickness}" mass="${wheel_mass}">
+            <origin xyz="${wheel_base/2} ${track_gauge/2} ${wheel_radius}" rpy="0 0 0"/>
+            <axis>-1 1 0</axis>
+        </xacro:meccanum_wheel>
+
+        <xacro:meccanum_wheel prefix="fr_" parent="donkey_base" radius="${wheel_radius}" height="${wheel_thickness}" mass="${wheel_mass}">
+            <origin xyz="${wheel_base/2} -${track_gauge/2} ${wheel_radius}" rpy="0 0 0"/>
+            <axis>-1 -1 0</axis>
+        </xacro:meccanum_wheel>
+
+        <xacro:meccanum_wheel prefix="rl_" parent="donkey_base" radius="${wheel_radius}" height="${wheel_thickness}" mass="${wheel_mass}">
+            <origin xyz="-${wheel_base/2} ${track_gauge/2} ${wheel_radius}" rpy="0 0 0"/>
+            <axis>1 1 0</axis>
+        </xacro:meccanum_wheel>
+
+        <xacro:meccanum_wheel prefix="rr_" parent="donkey_base" radius="${wheel_radius}" height="${wheel_thickness}" mass="${wheel_mass}">
+            <origin xyz="-${wheel_base/2} -${track_gauge/2} ${wheel_radius}" rpy="0 0 0"/>
+            <axis>1 -1 0</axis>
+        </xacro:meccanum_wheel>
+
+        <xacro:if value="${donkey_gazebo_ros_control}">
+            <gazebo>
+                <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                    <robotNamespace>/donkey</robotNamespace>
+                </plugin>
+            </gazebo>
+        </xacro:if>
+    </xacro:macro>
+</robot>

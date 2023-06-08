@@ -1,0 +1,13 @@
+<launch>
+  <arg name="spawn_controllers" default="true" />
+  <arg name="controllers_include" default="$(find donkey_gazebo)/launch/include/donkey_control.launch" />
+  <arg name="model" default="$(find donkey_description)/urdf/donkey.urdf.xacro" />
+
+  <include file="$(find donkey_gazebo)/launch/include/gazebo.launch">
+    <arg name="model" value="$(arg model)"/>
+    <arg name="spawn_controllers" value="$(arg spawn_controllers)"/>
+    <arg name="controllers_include" value="$(arg controllers_include)"/>
+  </include>
+
+  <include file="$(find donkey_gazebo)/launch/include/state_estimation.launch"/>
+</launch>

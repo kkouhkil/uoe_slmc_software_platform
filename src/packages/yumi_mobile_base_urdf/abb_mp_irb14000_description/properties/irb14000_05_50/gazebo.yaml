@@ -1,0 +1,119 @@
+base_link:
+  material: "Gazebo/White"
+  turn_gravity_off: false
+
+robl_link_1:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robl_link_2:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robl_link_3:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robl_link_4:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robl_link_5:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robl_link_6:
+  turn_gravity_off: false
+  selfCollide: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robl_link_7:
+  turn_gravity_off: false
+  selfCollide: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_1:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_2:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_3:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_4:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_5:
+  turn_gravity_off: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_6:
+  turn_gravity_off: false
+  selfCollide: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0
+
+robr_link_7:
+  turn_gravity_off: false
+  selfCollide: false
+  mu1: 1.0
+  mu2: 1
+  kp: 10000000.0
+  kd: 1000.0
+  fdir1: 1 0 0

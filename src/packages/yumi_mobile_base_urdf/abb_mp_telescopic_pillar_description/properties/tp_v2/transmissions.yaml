@@ -1,0 +1,5 @@
+body_transmission:
+  type: "transmission_interface/SimpleTransmission"
+  #hardware_interface: "hardware_interface/PositionJointInterface"
+  hardware_interface: "hardware_interface/EffortJointInterface"
+  mechanical_reduction: 1.0

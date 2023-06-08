@@ -1,0 +1,31 @@
+<package format="2">
+  <name>four_wheel_carlike_steering_controller</name>
+  <version>0.1.0</version>
+  <description>Controller for a four wheel steering carlike base. Credits to the authors of the original four_wheel_steering_controller this is forked from.</description>
+  <maintainer email="fredrik@ginsberg.se">Fredrik Ginsberg</maintainer>
+  <author email="fredrik@ginsberg.se">Fredrik Ginsberg</author>
+
+  <license>BSD</license>
+  
+  <url type="bugtracker">https://github.com/bob-ROS/four_wheel_carlike_steering_controller/issues</url>
+  <url type="repository">https://github.com/bob-ROS/four_wheel_carlike_steering_controller</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>controller_interface</depend>
+  <depend>nav_msgs</depend>
+  <depend>realtime_tools</depend>
+  <depend>tf</depend>
+  <depend>four_wheel_steering_controller</depend>
+  <depend>four_wheel_steering_msgs</depend>
+  <depend>urdf_geometry_parser</depend>
+
+  <test_depend>rosgraph_msgs</test_depend>
+  <test_depend>rostest</test_depend>
+  <test_depend>std_srvs</test_depend>
+  <test_depend>controller_manager</test_depend>
+
+  <export>
+    <controller_interface plugin="${prefix}/four_wheel_carlike_steering_controller_plugins.xml"/>
+  </export>
+</package>

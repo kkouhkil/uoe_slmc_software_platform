@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>donkey_gazebo</name>
+  <version>0.0.0</version>
+  <description>The donkey_gazebo package</description>
+  <maintainer email="elle.miller101@gmail.com">Elle Miller</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>donkey_description</depend>
+  <depend>robot_localization</depend>
+  <depend>mecanum_gazebo_plugin</depend>
+
+</package>

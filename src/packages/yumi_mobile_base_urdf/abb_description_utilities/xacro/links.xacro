@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- ================================================ Main Macros ================================================ -->
+
+  <!-- Creates a 'link' tag (based on properties loaded from an YAML file) -->
+  <xacro:macro name="link_tag" params="prefix=^ package=^ model=^ link_properties=^ name offset_rpy_visuals='0.0 0.0 0.0'">
+    <xacro:extract_data key="${name}" properties="${link_properties}"/>
+
+    <link name="${prefix}${name}">
+      <!-- Visual -->
+      <xacro:if value="${'visual' in data}">
+        <xacro:visual_tag data="${data['visual']}"/>
+      </xacro:if>
+
+      <!-- Collision -->
+      <xacro:if value="${'collision' in data}">
+        <xacro:collision_tag data="${data['collision']}"/>
+      </xacro:if>
+
+      <!-- Inertial -->
+      <xacro:if value="${'inertial' in data}">
+        <xacro:inertial_tag data="${data['inertial']}"/>
+      </xacro:if>
+
+      <!-- Dummy inertial (e.g. for enabling fixed "virtual" links in Gazebo) -->
+      <xacro:unless value="${'inertial' in data}">
+        <xacro:dummy_inertial_tag/>
+      </xacro:unless>
+    </link>
+  </xacro:macro>
+
+  <!-- ============================================== Support Macros =============================================== -->
+
+  <!-- Creates a 'visual' tag -->
+  <xacro:macro name="visual_tag" params="package=^ model=^ offset_rpy_visuals=^ data">
+    <visual>
+      <!-- Origin -->
+      <xacro:if value="${'origin' in data}">
+        <xacro:origin_tag data="${data['origin']}" offset_rpy="${offset_rpy_visuals}"/>
+      </xacro:if>
+      <xacro:unless value="${'origin' in data}">
+        <xacro:origin_tag data="" offset_rpy="${offset_rpy_visuals}"/>
+      </xacro:unless>
+
+      <!-- Geometry -->
+      <xacro:geometry_tag data="${data['geometry']}" mesh_type="visual"/>
+
+      <!-- Material -->
+      <xacro:material_tag material="${data['material']}"/>
+    </visual>
+  </xacro:macro>
+
+  <!-- Creates a 'collision' tag -->
+  <xacro:macro name="collision_tag" params="package=^ model=^ offset_rpy_visuals=^ data">
+    <collision>
+      <!-- Origin -->
+      <xacro:if value="${'origin' in data}">
+        <xacro:origin_tag data="${data['origin']}" offset_rpy="${offset_rpy_visuals}"/>
+      </xacro:if>
+      <xacro:unless value="${'origin' in data}">
+        <xacro:origin_tag data="" offset_rpy="${offset_rpy_visuals}"/>
+      </xacro:unless>
+
+      <!-- Geometry -->
+      <xacro:geometry_tag data="${data['geometry']}" mesh_type="collision"/>
+    </collision>
+  </xacro:macro>
+
+  <!-- Creates an 'inertial' tag -->
+  <xacro:macro name="inertial_tag" params="data">
+    <inertial>
+      <!-- Origin -->
+      <xacro:if value="${'origin' in data}">
+        <xacro:origin_tag data="${data['origin']}"/>
+      </xacro:if>
+
+      <!-- Mass -->
+      <mass value="${data['mass']}"/>
+
+      <!-- Inertia -->
+      <xacro:inertia_tag data="${data['inertia']}" mass="${data['mass']}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- Creates a dummy 'inertial' tag -->
+  <xacro:macro name="dummy_inertial_tag">
+    <inertial>
+      <!-- Mass -->
+      <mass value="1.0e-5"/>
+
+      <!-- Inertia -->
+      <inertia ixx="1.0e-6" ixy="0.0" ixz="0.0" iyy="1.0e-6" iyz="0.0" izz="1.0e-6"/>
+    </inertial>
+  </xacro:macro>
+</robot>
