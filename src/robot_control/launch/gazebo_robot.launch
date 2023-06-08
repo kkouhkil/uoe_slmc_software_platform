@@ -10,7 +10,7 @@
 
   <include 
     file="$(find robot_control)/launch/load_nextagea_mobile_base.launch">
-    <!--  load_nextagea -->
+    <!-- load_nextagea -->
     <!-- load_nextagea_mobile_base -->
     <!-- load_yumi_mobile_base -->
 
