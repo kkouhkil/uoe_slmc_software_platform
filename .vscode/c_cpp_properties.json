@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/keyhan/uoe_slmc_software_platform/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/combined_robot_hw/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/combined_robot_hw_tests/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/controller_interface/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/controller_manager/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/controller_manager_tests/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/four_wheel_carlike_steering_controller/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/hardware_interface/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/joint_limits_interface/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/nextage_mobile_base_urdf/realsense_gazebo_plugin/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/nextage_mobile_base_urdf/realtime_urdf_filter/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/ros_control/transmission_interface/include/**",
+        "/home/keyhan/uoe_slmc_software_platform/src/packages/yumi_mobile_base_urdf/urdf_geometry_parser/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
