@@ -1,0 +1,20 @@
+<launch>
+    <node pkg="spacenav_node" type="spacenav_node" name="$(anon spacenav_node)" output="screen">
+        <param name="zero_when_static" value="true"/>
+        <param name="static_count_threshold" value="30"/>
+        <remap from="/spacenav/twist" to="/twist_command"/>
+    </node>
+
+    <node
+        pkg="nextage_pushing"
+        type="action_client_teleop_2d.py"
+        name="action_client_teleop_2d"
+        ns="nextage"
+        output="screen"
+    >
+        <!-- <param name="target_position_x_R" type="double" value="0.3"/>
+        <param name="target_position_y_R" type="double" value="-0.2"/>
+        <param name="target_position_z_R" type="double" value="0.0"/> -->
+    </node>
+
+</launch>

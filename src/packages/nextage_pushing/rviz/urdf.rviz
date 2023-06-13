@@ -1,0 +1,733 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 138
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /RobotModel1
+        - /TF1
+        - /TF1/Frames1
+        - /TF1/Tree1
+      Splitter Ratio: 0.6471278071403503
+    Tree Height: 1675
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Name: Time
+    SyncMode: 0
+    SyncSource: ""
+Preferences:
+  PromptSaveOnExit: true
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        CAMERA_HEAD_HEADING_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        CAMERA_HEAD_L_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        CAMERA_HEAD_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        CAMERA_HEAD_R_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        CAMERA_HOLDER_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        CHEST_JOINT0_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        HEAD_JOINT0_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HEAD_JOINT1_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_END_EFFECTOR:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_END_EFFECTOR_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_END_EFFECTOR_grasp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        LARM_END_EFFECTOR_grasp_end:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_JOINT0_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_JOINT1_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_JOINT2_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_JOINT3_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_JOINT4_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_JOINT5_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_changer_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        LARM_changer_link_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LARM_ft_Sensor_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        LARM_ft_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        LARM_ft_link_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        Link Tree Style: Links in Alphabetic Order
+        RARM_END_EFFECTOR:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_END_EFFECTOR_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_END_EFFECTOR_grasp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        RARM_END_EFFECTOR_grasp_end:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_JOINT0_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_JOINT1_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_JOINT2_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_JOINT3_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_JOINT4_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_JOINT5_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_changer_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        RARM_changer_link_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RARM_ft_Sensor_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        RARM_ft_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        RARM_ft_link_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        WAIST:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_bottom_screw_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gaze_ref:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        nextage_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        teleop_ref:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+      Name: RobotModel
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz/TF
+      Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        CAMERA_HEAD_HEADING_Link:
+          Value: true
+        CAMERA_HEAD_L_Link:
+          Value: false
+        CAMERA_HEAD_Link:
+          Value: true
+        CAMERA_HEAD_R_Link:
+          Value: false
+        CAMERA_HOLDER_Link:
+          Value: false
+        CHEST_JOINT0_Link:
+          Value: false
+        HEAD_JOINT0_Link:
+          Value: false
+        HEAD_JOINT1_Link:
+          Value: false
+        LARM_END_EFFECTOR:
+          Value: false
+        LARM_END_EFFECTOR_finger:
+          Value: false
+        LARM_END_EFFECTOR_grasp:
+          Value: false
+        LARM_END_EFFECTOR_grasp_end:
+          Value: false
+        LARM_JOINT0_Link:
+          Value: false
+        LARM_JOINT1_Link:
+          Value: false
+        LARM_JOINT2_Link:
+          Value: false
+        LARM_JOINT3_Link:
+          Value: false
+        LARM_JOINT4_Link:
+          Value: false
+        LARM_JOINT5_Link:
+          Value: false
+        LARM_changer_link:
+          Value: false
+        LARM_changer_link_base:
+          Value: false
+        LARM_ft_Sensor_Link:
+          Value: false
+        LARM_ft_link:
+          Value: false
+        LARM_ft_link_base:
+          Value: false
+        RARM_END_EFFECTOR:
+          Value: false
+        RARM_END_EFFECTOR_finger:
+          Value: false
+        RARM_END_EFFECTOR_grasp:
+          Value: false
+        RARM_END_EFFECTOR_grasp_end:
+          Value: false
+        RARM_JOINT0_Link:
+          Value: false
+        RARM_JOINT1_Link:
+          Value: false
+        RARM_JOINT2_Link:
+          Value: false
+        RARM_JOINT3_Link:
+          Value: false
+        RARM_JOINT4_Link:
+          Value: false
+        RARM_JOINT5_Link:
+          Value: false
+        RARM_changer_link:
+          Value: false
+        RARM_changer_link_base:
+          Value: false
+        RARM_ft_Sensor_Link:
+          Value: false
+        RARM_ft_link:
+          Value: false
+        RARM_ft_link_base:
+          Value: false
+        WAIST:
+          Value: false
+        base_link:
+          Value: false
+        base_link_pushing_box:
+          Value: false
+        box_target:
+          Value: false
+        camera_bottom_screw_frame:
+          Value: false
+        camera_link:
+          Value: false
+        camera_mount:
+          Value: false
+        gaze_ref:
+          Value: true
+        nextage_base:
+          Value: false
+        rpbi/nextage/CAMERA_HEAD_HEADING_Link:
+          Value: false
+        rpbi/nextage/CAMERA_HEAD_L_Link:
+          Value: false
+        rpbi/nextage/CAMERA_HEAD_Link:
+          Value: false
+        rpbi/nextage/CAMERA_HEAD_R_Link:
+          Value: false
+        rpbi/nextage/CAMERA_HOLDER_Link:
+          Value: false
+        rpbi/nextage/CHEST_JOINT0_Link:
+          Value: false
+        rpbi/nextage/HEAD_JOINT0_Link:
+          Value: false
+        rpbi/nextage/HEAD_JOINT1_Link:
+          Value: false
+        rpbi/nextage/LARM_END_EFFECTOR:
+          Value: false
+        rpbi/nextage/LARM_END_EFFECTOR_finger:
+          Value: false
+        rpbi/nextage/LARM_END_EFFECTOR_grasp:
+          Value: false
+        rpbi/nextage/LARM_END_EFFECTOR_grasp_end:
+          Value: false
+        rpbi/nextage/LARM_JOINT0_Link:
+          Value: false
+        rpbi/nextage/LARM_JOINT1_Link:
+          Value: false
+        rpbi/nextage/LARM_JOINT2_Link:
+          Value: false
+        rpbi/nextage/LARM_JOINT3_Link:
+          Value: false
+        rpbi/nextage/LARM_JOINT4_Link:
+          Value: false
+        rpbi/nextage/LARM_JOINT5_Link:
+          Value: false
+        rpbi/nextage/LARM_changer_link:
+          Value: false
+        rpbi/nextage/LARM_changer_link_base:
+          Value: false
+        rpbi/nextage/LARM_ft_Sensor_Link:
+          Value: false
+        rpbi/nextage/LARM_ft_link:
+          Value: false
+        rpbi/nextage/LARM_ft_link_base:
+          Value: false
+        rpbi/nextage/RARM_END_EFFECTOR:
+          Value: false
+        rpbi/nextage/RARM_END_EFFECTOR_finger:
+          Value: false
+        rpbi/nextage/RARM_END_EFFECTOR_grasp:
+          Value: false
+        rpbi/nextage/RARM_END_EFFECTOR_grasp_end:
+          Value: false
+        rpbi/nextage/RARM_JOINT0_Link:
+          Value: false
+        rpbi/nextage/RARM_JOINT1_Link:
+          Value: false
+        rpbi/nextage/RARM_JOINT2_Link:
+          Value: false
+        rpbi/nextage/RARM_JOINT3_Link:
+          Value: false
+        rpbi/nextage/RARM_JOINT4_Link:
+          Value: false
+        rpbi/nextage/RARM_JOINT5_Link:
+          Value: false
+        rpbi/nextage/RARM_changer_link:
+          Value: false
+        rpbi/nextage/RARM_changer_link_base:
+          Value: false
+        rpbi/nextage/RARM_ft_Sensor_Link:
+          Value: false
+        rpbi/nextage/RARM_ft_link:
+          Value: false
+        rpbi/nextage/RARM_ft_link_base:
+          Value: false
+        rpbi/nextage/WAIST:
+          Value: false
+        rpbi/nextage/base_link:
+          Value: false
+        rpbi/nextage/camera_bottom_screw_frame:
+          Value: false
+        rpbi/nextage/camera_link:
+          Value: false
+        rpbi/nextage/camera_mount:
+          Value: false
+        rpbi/nextage/gaze_ref:
+          Value: false
+        rpbi/nextage/nextage_base:
+          Value: false
+        rpbi/nextage/teleop_ref:
+          Value: false
+        rpbi/nextage/world:
+          Value: false
+        rpbi/pushing_box:
+          Value: false
+        rpbi/world:
+          Value: false
+        rpbi_ws_ref:
+          Value: false
+        teleop_ref:
+          Value: false
+        world:
+          Value: true
+        ws_ref:
+          Value: false
+      Marker Alpha: 1
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        rpbi/world:
+          rpbi/nextage/CAMERA_HEAD_HEADING_Link:
+            {}
+          rpbi/nextage/CAMERA_HEAD_L_Link:
+            {}
+          rpbi/nextage/CAMERA_HEAD_Link:
+            {}
+          rpbi/nextage/CAMERA_HEAD_R_Link:
+            {}
+          rpbi/nextage/CAMERA_HOLDER_Link:
+            {}
+          rpbi/nextage/CHEST_JOINT0_Link:
+            {}
+          rpbi/nextage/HEAD_JOINT0_Link:
+            {}
+          rpbi/nextage/HEAD_JOINT1_Link:
+            {}
+          rpbi/nextage/LARM_END_EFFECTOR:
+            {}
+          rpbi/nextage/LARM_END_EFFECTOR_finger:
+            {}
+          rpbi/nextage/LARM_END_EFFECTOR_grasp:
+            {}
+          rpbi/nextage/LARM_END_EFFECTOR_grasp_end:
+            {}
+          rpbi/nextage/LARM_JOINT0_Link:
+            {}
+          rpbi/nextage/LARM_JOINT1_Link:
+            {}
+          rpbi/nextage/LARM_JOINT2_Link:
+            {}
+          rpbi/nextage/LARM_JOINT3_Link:
+            {}
+          rpbi/nextage/LARM_JOINT4_Link:
+            {}
+          rpbi/nextage/LARM_JOINT5_Link:
+            {}
+          rpbi/nextage/LARM_changer_link:
+            {}
+          rpbi/nextage/LARM_changer_link_base:
+            {}
+          rpbi/nextage/LARM_ft_Sensor_Link:
+            {}
+          rpbi/nextage/LARM_ft_link:
+            {}
+          rpbi/nextage/LARM_ft_link_base:
+            {}
+          rpbi/nextage/RARM_END_EFFECTOR:
+            {}
+          rpbi/nextage/RARM_END_EFFECTOR_finger:
+            {}
+          rpbi/nextage/RARM_END_EFFECTOR_grasp:
+            {}
+          rpbi/nextage/RARM_END_EFFECTOR_grasp_end:
+            {}
+          rpbi/nextage/RARM_JOINT0_Link:
+            {}
+          rpbi/nextage/RARM_JOINT1_Link:
+            {}
+          rpbi/nextage/RARM_JOINT2_Link:
+            {}
+          rpbi/nextage/RARM_JOINT3_Link:
+            {}
+          rpbi/nextage/RARM_JOINT4_Link:
+            {}
+          rpbi/nextage/RARM_JOINT5_Link:
+            {}
+          rpbi/nextage/RARM_changer_link:
+            {}
+          rpbi/nextage/RARM_changer_link_base:
+            {}
+          rpbi/nextage/RARM_ft_Sensor_Link:
+            {}
+          rpbi/nextage/RARM_ft_link:
+            {}
+          rpbi/nextage/RARM_ft_link_base:
+            {}
+          rpbi/nextage/WAIST:
+            {}
+          rpbi/nextage/base_link:
+            {}
+          rpbi/nextage/camera_bottom_screw_frame:
+            {}
+          rpbi/nextage/camera_link:
+            {}
+          rpbi/nextage/camera_mount:
+            {}
+          rpbi/nextage/gaze_ref:
+            {}
+          rpbi/nextage/nextage_base:
+            {}
+          rpbi/nextage/teleop_ref:
+            {}
+          rpbi/nextage/world:
+            {}
+          rpbi/pushing_box:
+            base_link_pushing_box:
+              {}
+          rpbi_ws_ref:
+            box_target:
+              {}
+          world:
+            base_link:
+              nextage_base:
+                WAIST:
+                  CHEST_JOINT0_Link:
+                    HEAD_JOINT0_Link:
+                      HEAD_JOINT1_Link:
+                        CAMERA_HEAD_HEADING_Link:
+                          {}
+                        CAMERA_HEAD_L_Link:
+                          {}
+                        CAMERA_HEAD_R_Link:
+                          CAMERA_HEAD_Link:
+                            CAMERA_HOLDER_Link:
+                              camera_bottom_screw_frame:
+                                camera_link:
+                                  {}
+                              camera_mount:
+                                {}
+                    LARM_JOINT0_Link:
+                      LARM_JOINT1_Link:
+                        LARM_JOINT2_Link:
+                          LARM_JOINT3_Link:
+                            LARM_JOINT4_Link:
+                              LARM_JOINT5_Link:
+                                LARM_ft_link_base:
+                                  LARM_ft_Sensor_Link:
+                                    LARM_ft_link:
+                                      LARM_changer_link_base:
+                                        LARM_changer_link:
+                                          LARM_END_EFFECTOR:
+                                            LARM_END_EFFECTOR_finger:
+                                              {}
+                                            LARM_END_EFFECTOR_grasp:
+                                              LARM_END_EFFECTOR_grasp_end:
+                                                {}
+                    RARM_JOINT0_Link:
+                      RARM_JOINT1_Link:
+                        RARM_JOINT2_Link:
+                          RARM_JOINT3_Link:
+                            RARM_JOINT4_Link:
+                              RARM_JOINT5_Link:
+                                RARM_ft_link_base:
+                                  RARM_ft_Sensor_Link:
+                                    RARM_ft_link:
+                                      RARM_changer_link_base:
+                                        RARM_changer_link:
+                                          RARM_END_EFFECTOR:
+                                            RARM_END_EFFECTOR_finger:
+                                              gaze_ref:
+                                                {}
+                                            RARM_END_EFFECTOR_grasp:
+                                              RARM_END_EFFECTOR_grasp_end:
+                                                {}
+              teleop_ref:
+                {}
+            ws_ref:
+              {}
+      Update Interval: 0
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Theta std deviation: 0.2617993950843811
+      Topic: /initialpose
+      X std deviation: 0.5
+      Y std deviation: 0.5
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 3.202336311340332
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Field of View: 0.7853981852531433
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.38539808988571167
+      Target Frame: <Fixed Frame>
+      Yaw: 5.503584384918213
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 2089
+  Hide Left Dock: false
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd0000000400000000000003570000075cfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006e00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000b0fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000470000075c000000f100fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000016b000006eafc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000006e000006ea000000c200fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000075c0000005efc0100000002fb0000000800540069006d006501000000000000075c0000045a00fffffffb0000000800540069006d00650100000000000004500000000000000000000003fe0000075c00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: true
+  Width: 1884
+  X: 72
+  Y: 34

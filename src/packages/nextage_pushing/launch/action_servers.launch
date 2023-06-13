@@ -1,0 +1,55 @@
+<launch>
+    <!-- set global arguments -->
+    <arg name="robot_name" default="nextage"/>
+    <!-- Launch a mux to send commands to the robot only from one source/controller -->
+    <node
+        name="mux_joint_position"
+        pkg="topic_tools"
+        type="mux" 
+        ns="/$(arg robot_name)"
+        args="streaming_controller/command
+            DefaultPositionController/command
+            ActionCmdPosePositionController/command
+            ActionCmdConfigPositionController/command
+            ActionCmdTwistPositionController/command
+            mux:=mux_joint_position"
+    />
+    <!-- Action Service Node for commanding end-effector poses -->
+    <node
+        name="action_server_cmd_config"
+        pkg="nextage_optas"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_config.py"
+        output="screen"
+        >
+        <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdConfigPositionController/command"/>
+        <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+        <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+    <!-- Action Service Node for commanding joint positions -->
+    <node
+        name="cmd_pose"
+        pkg="nextage_optas"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_pose_right_arm.py"
+        output="screen"
+        >
+            <rosparam file="$(find nextage_pushing)/config/param/cmd_pose_right_arm.yaml" command="load"/>
+            <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdPosePositionController/command"/>
+            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+            <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+    <!-- Action Service Node for teleoperating robot in 2D -->
+    <node
+        name="cmd_twist"
+        pkg="nextage_optas"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_twist_right_arm.py"
+        output="screen"
+        >
+            <rosparam file="$(find nextage_pushing)/config/param/teleop2d.yaml" command="load"/>
+            <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdTwistPositionController/command"/>
+            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+            <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+</launch>

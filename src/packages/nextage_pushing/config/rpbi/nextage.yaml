@@ -1,0 +1,37 @@
+name: "nextage"
+
+loadURDF:
+  fileName: "{nextage_pushing}/urdf/nextage_pushing.urdf"
+  useFixedBase: 1
+
+initial_joint_position:
+  CHEST_JOINT0: 0.0
+  HEAD_JOINT0: 0.0
+  HEAD_JOINT1: 0.0
+  LARM_JOINT0: 0.0
+  LARM_JOINT1: 0.0
+  LARM_JOINT2: 0.0
+  LARM_JOINT3: 0.0
+  LARM_JOINT4: 0.0
+  LARM_JOINT5: 0.0
+  RARM_JOINT0: 0.0
+  RARM_JOINT1: 0.0
+  RARM_JOINT2: 0.0
+  RARM_JOINT3: 0.0
+  RARM_JOINT4: 0.0
+  RARM_JOINT5: 0.0
+
+initial_revolute_joint_positions_are_deg: true
+is_visual_robot: false
+
+setJointMotorControlArray:
+  controlMode: "POSITION_CONTROL"
+
+publish_joint_state_frequency: 60
+
+enabled_joint_force_torque_sensors:
+  - "LARM_ft_sensor_joint"
+  - "RARM_ft_sensor_joint"
+
+broadcast_link_states: true
+broadcast_link_states_hz: 60
