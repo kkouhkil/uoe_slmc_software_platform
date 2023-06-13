@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<robot name="pushing_box" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Define pushing_box -->
+    <xacro:macro name="pushing_box" params="parent *origin">
+
+        <link name="base_link_pushing_box">
+            <visual>
+                <geometry>
+                    <box size="0.101 0.119 0.0705"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="1.0 1.0 0.0 1"/>
+                </material>
+            </visual>
+        </link>
+
+        <joint name="base_link_joint" type="floating">
+            <parent link="${parent}"/>
+            <child link="base_link_pushing_box"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>
