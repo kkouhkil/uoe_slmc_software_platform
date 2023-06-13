@@ -1,0 +1,72 @@
+<launch>
+    <!-- set global arguments -->
+    <arg name="robot_name" default="nextage"/>
+    <!-- Launch a mux to send commands to the robot only from one source/controller -->
+    <node
+        name="mux_joint_position"
+        pkg="topic_tools"
+        type="mux" 
+        ns="/$(arg robot_name)"
+        args="streaming_controller/command
+            DefaultPositionController/command
+            ActionCmdPosePositionController/command
+            ActionCmdConfigPositionController/command
+            ActionCmdTwistPositionController/command
+            mux:=mux_joint_position"
+    />
+    <!-- Action Service Node for commanding end-effector poses -->
+    <node
+        name="cmd_config"
+        pkg="nextage_custom_utils"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_config.py"
+        output="screen"
+        >
+            <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdConfigPositionController/command"/>
+            <param name="robot_description" type="string" value="~/robot_description_without_gripper"/>
+            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+            <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+    <!-- Action Service Node for commanding joint positions -->
+    <node
+        name="cmd_pose"
+        pkg="nextage_custom_utils"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_pose_right_arm.py"
+        output="screen"
+        >
+            <rosparam file="$(find nextage_picking)/config/param/cmd_pose_right_arm.yaml" command="load"/>
+            <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdPosePositionController/command"/>
+            <param name="robot_description" type="string" value="~/robot_description_without_gripper"/>
+            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+            <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+    <!-- Action Service Node for teleoperating robot in 3D -->
+    <node
+        name="cmd_twist"
+        pkg="nextage_custom_utils"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_twist_right_arm.py"
+        output="screen"
+        >
+            <rosparam file="$(find nextage_picking)/config/param/teleop.yaml" command="load"/>
+            <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdTwistPositionController/command"/>
+            <param name="robot_description" type="string" value="~/robot_description_without_gripper"/>
+            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+            <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+    <!-- Action Service Node for commanding joint positions -->
+    <node
+        name="cmd_pose_pick_and_place"
+        pkg="nextage_custom_utils"
+        ns="/$(arg robot_name)"
+        type="action_server_cmd_pose_both_arms.py"
+        output="screen"
+        >
+            <rosparam file="$(find nextage_picking)/config/param/cmd_pose_right_arm.yaml" command="load"/>
+            <param name="cmd_topic_name" type="string" value="/$(arg robot_name)/ActionCmdPosePositionController/command"/>
+            <param name="robot_description" type="string" value="~/robot_description_without_gripper"/>
+            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+            <remap from="/mux_selected" to="/$(arg robot_name)/mux_joint_position/selected"/>
+    </node>
+</launch>

@@ -1,0 +1,51 @@
+<launch>
+    <!-- set global arguments -->
+    <arg name="robot_name" default="nextage"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find nextage_picking)/urdf/nextage_picking.urdf.xacro'"/>
+
+    <param name="robot_description_without_gripper" command="$(find xacro)/xacro --inorder '$(find nextage_picking)/urdf/nextage_picking_without_gripper.urdf.xacro'"/>
+
+    <!-- Spawn position controller -->
+    <node
+        name="position_controller"
+        pkg="controller_manager"
+        type="spawner"
+        ns="/$(arg robot_name)"
+        args="streaming_controller"
+        respawn="false"
+        output="screen"
+    />
+
+    <!-- convert joint states to TF transforms -->
+    <node
+        name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher"
+        respawn="false"
+        output="screen"
+    >
+        <remap from="/joint_states" to="/$(arg robot_name)/joint_states" />
+    </node>
+
+    <!-- launch ati force/torque sensors -->
+    <node pkg="netft_rdt_driver" type="netft_node" name="netft_right" output="screen" args="--address 192.168.1.3 --rate 100 --frame_id RARM_ft_Sensor_Link" ns="nextage/RARM">
+        <remap from="/nextage/RARM/netft_data" to="/nextage/RARM/ft_sensor"/>
+    </node>
+    <node pkg="netft_rdt_driver" type="netft_node" name="netft_left" output="screen" args="--address 192.168.1.4 --rate 100 --frame_id LARM_ft_Sensor_Link" ns="nextage/LARM">
+        <remap from="/nextage/LARM/netft_data" to="/nextage/LARM/ft_sensor"/>
+    </node>
+
+    <!-- node for wrench offset -->
+    <node
+        name="wrench_offset"
+        pkg="wrench_utils"
+        type="offset_node.py"
+        ns="/$(arg robot_name)/RARM"
+        output="screen"
+    >
+            <remap from="/wrench_stamped_input" to="/nextage/RARM/ft_sensor"/>
+            <remap from="/wrench_stamped_output" to="/nextage/RARM/ft_sensor_offset"/>
+    </node>
+
+</launch>

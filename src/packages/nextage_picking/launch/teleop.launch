@@ -1,0 +1,17 @@
+<launch>
+    <node pkg="spacenav_node" type="spacenav_node" name="$(anon spacenav_node)" output="screen">
+        <param name="zero_when_static" value="true"/>
+        <param name="static_count_threshold" value="30"/>
+        <remap from="/spacenav/twist" to="/twist_command"/>
+    </node>
+
+    <node
+        pkg="nextage_picking"
+        type="action_client_teleop_3d.py"
+        name="action_client_teleop_3d"
+        ns="nextage"
+        output="screen"
+    >
+    </node>
+
+</launch>

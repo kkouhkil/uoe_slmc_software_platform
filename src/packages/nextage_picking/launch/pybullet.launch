@@ -1,0 +1,46 @@
+<launch>
+    <!-- name of the iiwa to use, useful in case of multiple robots. Every robot is gonna have its nodees/topics under a namespace with the same name. -->
+    <arg name="robot_name" default="nextage"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find nextage_picking)/urdf/nextage_picking.urdf.xacro'"/>
+
+    <param name="robot_description_without_gripper" command="$(find xacro)/xacro --inorder '$(find nextage_picking)/urdf/nextage_picking_without_gripper.urdf.xacro'"/>
+
+    <!-- ROS-Pybullet interface node simulator -->
+    <node pkg="ros_pybullet_interface" name="ros_pybullet_interface_node" type="ros_pybullet_interface_node.py">
+        <rosparam param="config" file="$(find nextage_picking)/config/rpbi/config.yaml"/>
+        <remap from="/rpbi/nextage/LARM_ft_sensor_joint/ft_sensor" to="/nextage/LARM/ft_sensor"/>
+        <remap from="/rpbi/nextage/RARM_ft_sensor_joint/ft_sensor" to="/nextage/RARM/ft_sensor"/>
+        <remap from="/rpbi/nextage/RARM_ft_sensor_joint/Zero" to="/nextage/RARM/zero"/>
+    </node>
+
+    <!-- Listens on /nextage/PositionController/command and re-publishes on rpbi/nextage/joint_states/target adapting the message type -->
+    <node name="command_to_rpbi" pkg="nextage_custom_utils" type="remap_float_array_to_joint_states.py">
+        <remap from="/float_array_input" to="/nextage/streaming_controller/command"/>
+        <remap from="/joint_states_output" to="/rpbi/nextage/joint_states/target"/>
+    </node>
+
+    <!-- Listens on /rpbi/nextage/joint_states and re-publishes on nextage/joint_states selecting only the controllable joints -->
+    <node name="filter_joint_states" pkg="nextage_custom_utils" type="remap_joint_states_to_joint_states.py">
+        <remap from="/joint_states_input" to="/rpbi/nextage/joint_states"/>
+        <remap from="/joint_states_output" to="/nextage/joint_states"/>
+    </node>
+
+    <!--convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <remap from="/joint_states" to="/rpbi/nextage/joint_states" />
+    </node>
+
+    <!-- node for wrench offset -->
+    <node
+        name="wrench_offset"
+        pkg="wrench_utils"
+        type="offset_node.py"
+        ns="/$(arg robot_name)/RARM"
+        output="screen"
+    >
+            <remap from="/wrench_stamped_input" to="/nextage/RARM/ft_sensor"/>
+            <remap from="/wrench_stamped_output" to="/nextage/RARM/ft_sensor_offset"/>
+    </node>
+
+</launch>

@@ -1,0 +1,5 @@
+link_ee_right: "RARM_changer_link"
+link_ee_left: "LARM_changer_link"
+link_head: "CAMERA_HEAD_HEADING_Link"
+link_gaze: "gaze_ref"
+link_ref: "teleop_ref"

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--|
+    Copyright (C) 2022 Statistical Machine Learning and Motor Control Group (SLMC)
+    Authors:  Joao Moura (maintainer)
+    email:    Joao.Moura@ed.ac.uk
+    This file is part of nextage_pushing.
+    nextage_pushing is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    nextage_pushing is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+|-->
+
+<launch>
+  <arg name="rviz_config" default="$(find nextage_pushing)/rviz/urdf.rviz"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)"/>
+</launch>

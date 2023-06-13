@@ -1,0 +1,16 @@
+gazebo_ros_control:   
+  pid_gains:
+    LARM_finger_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    LARM_left_inner_knuckle_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    LARM_left_inner_finger_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    LARM_right_outer_knuckle_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    LARM_right_inner_knuckle_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    LARM_right_inner_finger_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    LARM_gripper_open_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_finger_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_left_inner_knuckle_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_left_inner_finger_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_right_outer_knuckle_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_right_inner_knuckle_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_right_inner_finger_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}
+    RARM_gripper_open_joint: {p: 100.0, i: 0, d: 0.1, i_clamp: 1}

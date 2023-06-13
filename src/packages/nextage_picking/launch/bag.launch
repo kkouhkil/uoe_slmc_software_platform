@@ -1,0 +1,25 @@
+<launch>
+    <!-- name of the iiwa to use, useful in case of multiple robots. Every robot is gonna have its nodees/topics under a namespace with the same name. -->
+    <arg name="robot_name" default="nextage"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find nextage_picking)/urdf/nextage_picking.urdf.xacro'"/>
+
+    <!-- convert joint states to TF transforms -->
+    <node
+        name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher"
+        respawn="false"
+        output="screen"
+    >
+        <remap from="/joint_states" to="/$(arg robot_name)/joint_states" />
+    </node>
+
+    <param name="use_sim_time" type="bool" value="true" />
+
+    <!--
+        For launching the rviz with the rosbag:
+            rosbag play name_of_bagfile.bag - -clock
+    -->
+
+</launch>
