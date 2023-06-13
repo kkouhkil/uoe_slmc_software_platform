@@ -1,4 +1,0 @@
-link_ee_right: "RARM_END_EFFECTOR_finger"
-link_ee_left: "LARM_END_EFFECTOR_finger"
-link_head: "CAMERA_HEAD_HEADING_Link"
-link_gaze: "gaze_ref"
